@@ -29,7 +29,7 @@ export default function LoadingScreen({ phase, onOpen }) {
               style={{
                 backgroundImage: 'url(/7.jpg)',
                 backgroundSize: 'cover',
-                backgroundPosition: 'center 30%',
+                backgroundPosition: '75% 30%', /* Shift focal point right to reveal groom on mobile */
                 animation: phase === 'transition'
                   ? 'portalBackgroundZoom 2s forwards cubic-bezier(0.4, 0, 0.2, 1)'
                   : 'none',
