@@ -9,13 +9,13 @@ import ScrollReveal from '../components/animations/ScrollReveal';
    Replace GALLERY_ITEMS[].src with real photo paths.
    ============================================ */
 const GALLERY_ITEMS = [
-  { id: 1, src: '/Gallery/25.jpg', alt: 'Memories together 1' },
+  { id: 1, src: '/Gallery/10.2.jpg', alt: 'Memories together 1' },
   { id: 2, src: '/Gallery/4.jpg', alt: 'Memories together 2' },
   { id: 3, src: '/Gallery/5.jpg', alt: 'Memories together 3' },
   { id: 4, src: '/Gallery/6.jpg', alt: 'Memories together 4' },
   { id: 5, src: '/Gallery/9.jpg', alt: 'Memories together 5' },
   { id: 6, src: '/Gallery/10.jpg', alt: 'Memories together 6' },
-  { id: 7, src: '/Gallery/10.2.jpg', alt: 'Memories together 7' },
+  { id: 7, src: '/Gallery/25.jpg', alt: 'Memories together 7' },
   { id: 8, src: '/Gallery/11.jpg', alt: 'Memories together 8' },
   { id: 9, src: '/Gallery/12.jpg', alt: 'Memories together 9' },
   { id: 10, src: '/Gallery/15.jpg', alt: 'Memories together 10' },
