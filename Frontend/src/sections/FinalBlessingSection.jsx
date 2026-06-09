@@ -36,19 +36,8 @@ export default function FinalBlessingSection() {
           overflow: 'visible',
         }}
       >
-
-        <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          overflow: 'visible',
-          zIndex: 0,
-        }}
-      >
+        {/* ── Floating rose petals ── */}
+        {[...Array(4)].map((_, i) => (
         <motion.div
           key={`petal-final-${i}`}
           className="absolute pointer-events-none"
