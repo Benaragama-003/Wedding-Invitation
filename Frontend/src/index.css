@@ -665,10 +665,12 @@ body {
   object-fit: cover;
 
   /*
-    x = 52%  : slight right shift to balance both faces inside arch
-    y = 84%  : push image upward → aligns the 72% focal point (hands) to the 50% viewport center
+    Since object-position fails if there is no vertical overflow (e.g. Mac screens),
+    we use a CSS transform to physically drag the image UP by 10%.
+    We scale by 1.2 to prevent a black gap from appearing at the bottom.
   */
-  object-position: 52% 84%;
+  object-position: 52% center;
+  transform: translateY(-10%) scale(1.2);
 }
 
 /* ── Mobile override ────────────────────────
