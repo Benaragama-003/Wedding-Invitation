@@ -35,11 +35,11 @@ export default function HeroSection() {
         <img
           src="/16.jpg"
           alt="Wedding couple"
-          className="bg-hero-main-responsive"
           style={{
             width: '100%',
             height: '100%',
             objectFit: 'cover',
+            objectPosition: 'center 30%',
           }}
         />
         {/* Dark gradient overlay for text legibility */}
