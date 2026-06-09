@@ -10,9 +10,23 @@ import { motion } from 'framer-motion';
    - THE WEDDING OF
    - Couple names
    - Date
+
+   IMAGE POSITIONING NOTES
+   ─────────────────────────────────────────────
+   Desktop:
+     objectPosition: '55% 72%'
+     → 55% horizontal  = shifts slightly right so both faces centre in the
+       arch opening (bride is right-of-centre, groom left-of-centre).
+     → 72% vertical    = pulls the image UP so their joined hands sit
+       roughly at vertical mid-screen, aligning with the "&" text.
+
+   Mobile (via CSS class hero-img-mobile):
+     objectFit: contain  → never crops; full bodies always visible.
+     background: #0d1208  → dark fill for any letterbox bars.
    ============================================ */
-const BRIDE_NAME   = 'Nilushi Benaragama';
-const GROOM_NAME   = 'Sangeeth Bandara';
+
+const BRIDE_NAME = 'Nilushi Benaragama';
+const GROOM_NAME = 'Sangeeth Bandara';
 const WEDDING_DATE = '16.10.2026';
 
 export default function HeroSection() {
@@ -31,17 +45,19 @@ export default function HeroSection() {
       }}
     >
       {/* ── Full-screen background photo ── */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 hero-bg-wrapper">
+        {/*
+          Single <img> handles both desktop and mobile via the
+          CSS classes defined in globals.css:
+            .hero-photo          → desktop styles
+            .hero-photo-mobile   → applied only on ≤768 px
+        */}
         <img
           src="/16.jpg"
           alt="Wedding couple"
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center 30%',
-          }}
+          className="hero-photo"
         />
+
         {/* Dark gradient overlay for text legibility */}
         <div
           className="absolute inset-0"
@@ -49,9 +65,9 @@ export default function HeroSection() {
             background: `
               linear-gradient(to bottom,
                 rgba(30,20,10,0.50) 0%,
-                rgba(30,20,10,0.30) 35%,
-                rgba(30,20,10,0.30) 55%,
-                rgba(30,20,10,0.55) 100%
+                rgba(30,20,10,0.28) 35%,
+                rgba(30,20,10,0.28) 58%,
+                rgba(30,20,10,0.58) 100%
               )
             `,
           }}
@@ -69,7 +85,7 @@ export default function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 0.61, 0.36, 1] }}
         >
-          {/* Top text */}
+          {/* Top invite text */}
           <div className="mb-10 flex flex-col items-center gap-2">
             <p
               className="font-body"
@@ -102,10 +118,23 @@ export default function HeroSection() {
 
           {/* Names with leaf ornaments */}
           <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 mb-10 w-full">
-            {/* Left Leaf (hidden on very small screens to save space) */}
-            <svg className="hidden md:block" width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}>
-              <path d="M12 22C12 22 4 16 4 10C4 5 8 2 12 2C16 2 20 5 20 10C20 16 12 22 12 22Z" fill="white" transform="rotate(-45 12 12) scale(0.6)" />
-              <path d="M12 22C12 22 4 16 4 10C4 5 8 2 12 2C16 2 20 5 20 10C20 16 12 22 12 22Z" fill="white" transform="rotate(15 12 12) scale(0.4) translate(-10, 10)" />
+
+            {/* Left Leaf (hidden on small screens) */}
+            <svg
+              className="hidden md:block"
+              width="24" height="24" viewBox="0 0 24 24" fill="none"
+              style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}
+            >
+              <path
+                d="M12 22C12 22 4 16 4 10C4 5 8 2 12 2C16 2 20 5 20 10C20 16 12 22 12 22Z"
+                fill="white"
+                transform="rotate(-45 12 12) scale(0.6)"
+              />
+              <path
+                d="M12 22C12 22 4 16 4 10C4 5 8 2 12 2C16 2 20 5 20 10C20 16 12 22 12 22Z"
+                fill="white"
+                transform="rotate(15 12 12) scale(0.4) translate(-10, 10)"
+              />
             </svg>
 
             <h1
@@ -119,14 +148,34 @@ export default function HeroSection() {
               }}
             >
               <span>{BRIDE_NAME}</span>
-              <span className="mx-3" style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontFamily: 'var(--font-script)' }}>&amp;</span>
+              <span
+                className="mx-3"
+                style={{
+                  fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+                  fontFamily: 'var(--font-script)',
+                }}
+              >
+                &amp;
+              </span>
               <span>{GROOM_NAME}</span>
             </h1>
 
             {/* Right Leaf */}
-            <svg className="hidden md:block" width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}>
-              <path d="M12 22C12 22 4 16 4 10C4 5 8 2 12 2C16 2 20 5 20 10C20 16 12 22 12 22Z" fill="white" transform="rotate(45 12 12) scale(0.6)" />
-              <path d="M12 22C12 22 4 16 4 10C4 5 8 2 12 2C16 2 20 5 20 10C20 16 12 22 12 22Z" fill="white" transform="rotate(-15 12 12) scale(0.4) translate(10, 10)" />
+            <svg
+              className="hidden md:block"
+              width="24" height="24" viewBox="0 0 24 24" fill="none"
+              style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}
+            >
+              <path
+                d="M12 22C12 22 4 16 4 10C4 5 8 2 12 2C16 2 20 5 20 10C20 16 12 22 12 22Z"
+                fill="white"
+                transform="rotate(45 12 12) scale(0.6)"
+              />
+              <path
+                d="M12 22C12 22 4 16 4 10C4 5 8 2 12 2C16 2 20 5 20 10C20 16 12 22 12 22Z"
+                fill="white"
+                transform="rotate(-15 12 12) scale(0.4) translate(10, 10)"
+              />
             </svg>
           </div>
 
@@ -160,7 +209,7 @@ export default function HeroSection() {
         </motion.div>
       </div>
 
-      {/* ── Scroll down chevron ── */}
+      {/* ── Scroll-down chevron ── */}
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer"
         style={{ zIndex: 20 }}
@@ -174,8 +223,20 @@ export default function HeroSection() {
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
         >
           <svg width="32" height="20" viewBox="0 0 32 20" fill="none">
-            <path d="M4 4 L16 14 L28 4" stroke="rgba(255,255,255,0.8)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M4 0 L16 10 L28 0" stroke="rgba(255,255,255,0.4)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            <path
+              d="M4 4 L16 14 L28 4"
+              stroke="rgba(255,255,255,0.8)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M4 0 L16 10 L28 0"
+              stroke="rgba(255,255,255,0.4)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </motion.div>
       </motion.div>
