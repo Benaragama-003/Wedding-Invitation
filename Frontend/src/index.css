@@ -387,8 +387,12 @@ body {
   /* Scale the image up by 25% so that we have enough overflow to pan it horizontally. */
   background-size: 125%;
   /* Pan to the right edge (100%) to pull the hands to the center. 
-     20% vertically nudges them down to sit right above the ampersand. */
   background-position: 100% 20%;
+}
+
+.bg-hero-main-responsive {
+  /* Desktop: Shift image right (focal point 35%) to perfectly center both of them */
+  background-position: 35% center !important;
 }
 
 @media (max-width: 768px) {
@@ -401,12 +405,7 @@ body {
   }
 
   .bg-hero-main-responsive {
-    /* Shift focal point right (65%) to move the image left, bringing the groom's arm into frame */
-    object-position: 65% center !important;
+    /* Mobile: Shift image further right (20%) to save the groom's hand from cropping */
+    background-position: 20% center !important;
   }
-}
-
-.bg-hero-main-responsive {
-  /* Desktop: Shift focal point right (60%) to move the image left */
-  object-position: 60% center;
 }
