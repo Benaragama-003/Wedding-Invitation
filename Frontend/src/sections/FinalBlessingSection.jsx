@@ -14,7 +14,7 @@ const WEDDING_DATE = '16.10.2026';
 
 export default function FinalBlessingSection() {
   return (
-    <section id="blessing" className="section-pad relative overflow-hidden"
+    <section id="blessing" className="section-pad relative overflow-visible"
       style={{ background: 'var(--color-bg-alt, var(--color-bg))' }}>
       <div
         className="absolute inset-0 pointer-events-none"
@@ -24,11 +24,31 @@ export default function FinalBlessingSection() {
             radial-gradient(ellipse at 85% 80%, rgba(156,175,136,0.07) 0%, transparent 50%),
             radial-gradient(ellipse at 50% 50%, rgba(183,110,121,0.05) 0%, transparent 70%)
           `,
+          zIndex: 0,
         }}
       />
 
-      {/* ── Floating rose petals ── */}
-      {[...Array(4)].map((_, i) => (
+      {/* ── Petal animation container (position: absolute, full coverage, overflow visible) ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          zIndex: 1,
+          overflow: 'visible',
+        }}
+      >
+
+        <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          overflow: 'visible',
+          zIndex: 0,
+        }}
+      >
         <motion.div
           key={`petal-final-${i}`}
           className="absolute pointer-events-none"
@@ -39,6 +59,7 @@ export default function FinalBlessingSection() {
             height: (7 + i * 2) * 1.4,
             background: i % 2 === 0 ? 'rgba(183,110,121,0.50)' : 'rgba(232,207,200,0.55)',
             borderRadius: '50% 12% 50% 48%',
+            zIndex: 1,
           }}
           animate={{
             y: ['0vh', '110vh'],
@@ -55,33 +76,34 @@ export default function FinalBlessingSection() {
         />
       ))}
 
-      {/* ── Floating wheat grains ── */}
-      {[...Array(3)].map((_, i) => (
-        <motion.div
-          key={`wheat-final-${i}`}
-          className="absolute pointer-events-none"
-          style={{ left: `${28 + i * 22}%`, top: '-3%' }}
-          animate={{
-            y: ['0vh', '110vh'],
-            rotate: [0, 50, -25, 40],
-            opacity: [0, 0.45, 0.45, 0],
-          }}
-          transition={{
-            duration: 24 + i * 5,
-            delay: 4 + i * 6,
-            repeat: Infinity,
-            ease: 'linear',
-          }}
-        >
-          <svg width="10" height="20" viewBox="0 0 10 20" fill="none">
-            <ellipse cx="5" cy="7" rx="3" ry="6" fill="var(--color-gold)" opacity="0.55" />
-            <line x1="5" y1="13" x2="5" y2="20" stroke="var(--color-gold)" strokeWidth="0.8" opacity="0.35" />
-          </svg>
-        </motion.div>
-      ))}
+        {/* ── Floating wheat grains ── */}
+        {[...Array(3)].map((_, i) => (
+          <motion.div
+            key={`wheat-final-${i}`}
+            className="absolute pointer-events-none"
+            style={{ left: `${28 + i * 22}%`, top: '-3%', zIndex: 1 }}
+            animate={{
+              y: ['0vh', '110vh'],
+              rotate: [0, 50, -25, 40],
+              opacity: [0, 0.45, 0.45, 0],
+            }}
+            transition={{
+              duration: 24 + i * 5,
+              delay: 4 + i * 6,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+          >
+            <svg width="10" height="20" viewBox="0 0 10 20" fill="none">
+              <ellipse cx="5" cy="7" rx="3" ry="6" fill="var(--color-gold)" opacity="0.55" />
+              <line x1="5" y1="13" x2="5" y2="20" stroke="var(--color-gold)" strokeWidth="0.8" opacity="0.35" />
+            </svg>
+          </motion.div>
+        ))}
+      </div>
 
       {/* ── Main content ── */}
-      <div className="invitation-container relative z-10">
+      <div className="invitation-container relative" style={{ zIndex: 20 }}>
         <ScrollReveal animation="fade-in" duration={1.2}>
           <div className="text-center">
             {/* Decorative top flourish */}

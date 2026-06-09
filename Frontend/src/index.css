@@ -663,8 +663,8 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 78%;
-  /* centered X, Y adjusted so hands align with & symbol */
+  object-position: 58% 78%;
+  /* couple shifted right, hands align with & symbol */
 }
 
 /* ── Mobile override ────────────────────────
@@ -673,12 +673,11 @@ body {
 
    Strategy: use object-fit: cover to fill the
    entire viewport edge-to-edge, combined with
-   object-position: center 30% to show upper
-   bodies and faces without clipping heads.
+   less Y shift so arch stays visible at top.
    ────────────────────────────────────────── */
 @media (max-width: 768px) {
   .hero-photo {
     object-fit: cover;
-    object-position: 50% 72%;
+    object-position: 55% 35%;
   }
 }
