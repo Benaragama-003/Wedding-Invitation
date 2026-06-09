@@ -384,10 +384,11 @@ body {
    ============================================ */
 .bg-hero-responsive {
   background-image: url('/7.jpg');
-  background-size: cover;
-  /* 85% pans right significantly to pull their holding hands to the center over the ampersand.
-     10% lowers the image to bring their hands physically closer to the text. */
-  background-position: 85% 10%;
+  /* Scale the image up by 25% so that we have enough overflow to pan it horizontally. */
+  background-size: 125%;
+  /* Pan to the right edge (100%) to pull the hands to the center. 
+     20% vertically nudges them down to sit right above the ampersand. */
+  background-position: 100% 20%;
 }
 
 @media (max-width: 768px) {
