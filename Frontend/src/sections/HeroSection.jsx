@@ -35,11 +35,11 @@ export default function HeroSection() {
         <img
           src="/16.jpg"
           alt="Wedding couple"
+          className="object-hero-responsive"
           style={{
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            objectPosition: 'calc(20% + 37.8px) center',
           }}
         />
         {/* Dark gradient overlay for text legibility */}

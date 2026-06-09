@@ -380,7 +380,7 @@ body {
 .scroll-snap-section-auto { scroll-snap-align: start; }
 
 /* ============================================
-   RESPONSIVE HERO BACKGROUND
+   RESPONSIVE HERO BACKGROUND (LOADING SCREEN)
    ============================================ */
 .bg-hero-responsive {
   background-image: url('/7.jpg');
@@ -388,22 +388,24 @@ body {
   background-position: center 30%;
 }
 
-.bg-hero-main-responsive {
-  /* Shift desktop hero 37.8px to the right */
-  background-position: calc(50% + 37.8px) center !important;
+/* ============================================
+   RESPONSIVE HERO OBJECT (MAIN HERO SCREEN)
+   ============================================ */
+.object-hero-responsive {
+  object-position: center;
 }
 
 @media (max-width: 768px) {
   .bg-hero-responsive {
     /* Zoom in slightly (112% height) to create vertical overflow, 
        then align to top (0%) to crop out the bottom dark water.
-       Moved 37.8px to the left per user request */
+       60% horizontally brings both bride and groom perfectly into frame. */
     background-size: auto 112%;
-    background-position: calc(65% - 37.8px) 0%;
+    background-position: 60% 0%;
   }
 
-  .bg-hero-main-responsive {
-    /* Shift mobile hero 37.8px to the right */
-    background-position: calc(30% + 37.8px) center !important;
+  .object-hero-responsive {
+    /* 30% perfectly frames both bodies on the mobile hero screen */
+    object-position: 30% center !important;
   }
 }
