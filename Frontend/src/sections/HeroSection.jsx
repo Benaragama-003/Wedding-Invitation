@@ -10,6 +10,12 @@ export default function HeroSection() {
     document.getElementById('couple')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Split names for two-line rendering
+  const brideFirst = BRIDE_NAME.split(' ')[0];
+  const brideLast  = BRIDE_NAME.split(' ').slice(1).join(' ');
+  const groomFirst = GROOM_NAME.split(' ')[0];
+  const groomLast  = GROOM_NAME.split(' ').slice(1).join(' ');
+
   return (
     <section
       id="hero"
@@ -102,21 +108,36 @@ export default function HeroSection() {
           </h3>
 
           {/* Names block: 3-column layout on desktop, stacked on mobile */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 mb-10 w-full">
-
-            {/* Bride name */}
+          <div
+            className="names-container"
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '1rem',
+              marginBottom: '2.5rem',
+              width: '100%',
+              maxWidth: '1100px',
+              margin: '0 auto 2.5rem auto',
+            }}
+          >
+            {/* Bride */}
             <h1
-              className="font-script text-center"
+              className="font-script"
               style={{
                 color: '#FFFFFF',
-                fontSize: 'clamp(2.5rem, 5vw, 4.2rem)',
-                lineHeight: 1.1,
+                fontSize: 'clamp(2.4rem, 3.8vw, 3.8rem)',
+                lineHeight: 1.08,
                 textShadow: '0 4px 16px rgba(0,0,0,0.5)',
-                flex: '1',
                 textAlign: 'center',
+                flex: '1',
+                maxWidth: '340px',
+                wordBreak: 'keep-all',
+                overflowWrap: 'break-word',
               }}
             >
-              {BRIDE_NAME}
+              {brideFirst}<br />{brideLast}
             </h1>
 
             {/* Ampersand */}
@@ -124,30 +145,36 @@ export default function HeroSection() {
               className="font-script"
               style={{
                 color: '#FFFFFF',
-                fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+                fontSize: 'clamp(2.5rem, 3.8vw, 3.8rem)',
                 textShadow: '0 4px 16px rgba(0,0,0,0.5)',
                 flexShrink: 0,
+                width: '70px',
+                textAlign: 'center',
+                alignSelf: 'center',
                 lineHeight: 1,
+                display: 'block',
               }}
             >
               &amp;
             </span>
 
-            {/* Groom name */}
+            {/* Groom */}
             <h1
-              className="font-script text-center"
+              className="font-script"
               style={{
                 color: '#FFFFFF',
-                fontSize: 'clamp(2.5rem, 5vw, 4.2rem)',
-                lineHeight: 1.1,
+                fontSize: 'clamp(2.4rem, 3.8vw, 3.8rem)',
+                lineHeight: 1.08,
                 textShadow: '0 4px 16px rgba(0,0,0,0.5)',
-                flex: '1',
                 textAlign: 'center',
+                flex: '1',
+                maxWidth: '340px',
+                wordBreak: 'keep-all',
+                overflowWrap: 'break-word',
               }}
             >
-              {GROOM_NAME}
+              {groomFirst}<br />{groomLast}
             </h1>
-
           </div>
 
           {/* Date */}
