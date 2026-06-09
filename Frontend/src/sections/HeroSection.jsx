@@ -101,67 +101,53 @@ export default function HeroSection() {
             THE WEDDING OF
           </h3>
 
-          {/* Names with leaf ornaments */}
-          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 mb-10 w-full">
+          {/* Names block: 3-column layout on desktop, stacked on mobile */}
+          <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-6 mb-10 w-full">
 
-            {/* Left Leaf (hidden on small screens) */}
-            <svg
-              className="hidden md:block"
-              width="24" height="24" viewBox="0 0 24 24" fill="none"
-              style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}
-            >
-              <path
-                d="M12 22C12 22 4 16 4 10C4 5 8 2 12 2C16 2 20 5 20 10C20 16 12 22 12 22Z"
-                fill="white"
-                transform="rotate(-45 12 12) scale(0.6)"
-              />
-              <path
-                d="M12 22C12 22 4 16 4 10C4 5 8 2 12 2C16 2 20 5 20 10C20 16 12 22 12 22Z"
-                fill="white"
-                transform="rotate(15 12 12) scale(0.4) translate(-10, 10)"
-              />
-            </svg>
-
+            {/* Bride name */}
             <h1
-              className="font-script flex flex-col md:flex-row items-center justify-center"
+              className="font-script text-center"
               style={{
                 color: '#FFFFFF',
-                fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
+                fontSize: 'clamp(2.5rem, 5vw, 4.2rem)',
                 lineHeight: 1.1,
                 textShadow: '0 4px 16px rgba(0,0,0,0.5)',
-                padding: '0 10px',
+                flex: '1',
+                textAlign: 'center',
               }}
             >
-              <span>{BRIDE_NAME}</span>
-              <span
-                className="mx-3"
-                style={{
-                  fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-                  fontFamily: 'var(--font-script)',
-                }}
-              >
-                &amp;
-              </span>
-              <span>{GROOM_NAME}</span>
+              {BRIDE_NAME}
             </h1>
 
-            {/* Right Leaf */}
-            <svg
-              className="hidden md:block"
-              width="24" height="24" viewBox="0 0 24 24" fill="none"
-              style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))' }}
+            {/* Ampersand */}
+            <span
+              className="font-script"
+              style={{
+                color: '#FFFFFF',
+                fontSize: 'clamp(2rem, 4vw, 3.5rem)',
+                textShadow: '0 4px 16px rgba(0,0,0,0.5)',
+                flexShrink: 0,
+                lineHeight: 1,
+              }}
             >
-              <path
-                d="M12 22C12 22 4 16 4 10C4 5 8 2 12 2C16 2 20 5 20 10C20 16 12 22 12 22Z"
-                fill="white"
-                transform="rotate(45 12 12) scale(0.6)"
-              />
-              <path
-                d="M12 22C12 22 4 16 4 10C4 5 8 2 12 2C16 2 20 5 20 10C20 16 12 22 12 22Z"
-                fill="white"
-                transform="rotate(-15 12 12) scale(0.4) translate(10, 10)"
-              />
-            </svg>
+              &amp;
+            </span>
+
+            {/* Groom name */}
+            <h1
+              className="font-script text-center"
+              style={{
+                color: '#FFFFFF',
+                fontSize: 'clamp(2.5rem, 5vw, 4.2rem)',
+                lineHeight: 1.1,
+                textShadow: '0 4px 16px rgba(0,0,0,0.5)',
+                flex: '1',
+                textAlign: 'center',
+              }}
+            >
+              {GROOM_NAME}
+            </h1>
+
           </div>
 
           {/* Date */}
