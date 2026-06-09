@@ -97,26 +97,24 @@ export default function CountdownSection() {
 
   return (
     <section id="countdown" className="section-pad relative">
-      {/* Soft floral accent bottom-left — baby pink + sage */}
+      {/* Soft copper accent bottom-left */}
       <div className="absolute bottom-0 left-0 pointer-events-none overflow-hidden" style={{ width: 120, height: 120 }}>
-        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" opacity="0.14">
-          <circle cx="20" cy="100" r="22" fill="#E8CFC8" />
-          <circle cx="35" cy="85" r="16" fill="#C9918A" />
-          <circle cx="15" cy="78" r="10" fill="#9CAF88" />
+        <svg width="120" height="120" viewBox="0 0 120 120" fill="none" opacity="0.10">
+          <circle cx="20" cy="100" r="22" fill="var(--color-accent)" />
+          <circle cx="35" cy="85" r="16" fill="var(--color-accent)" />
+          <circle cx="15" cy="78" r="10" fill="var(--color-accent)" />
         </svg>
       </div>
 
       <div className="container-details relative z-10">
         <ScrollReveal animation="fade-in" duration={1}>
-          {/* Small floral accent above title */}
+          {/* Small accent above title */}
           <div className="flex justify-center mb-3">
-            <svg width="48" height="20" viewBox="0 0 48 20" fill="none" opacity="0.5">
-              <circle cx="24" cy="10" r="3.5" fill="var(--color-floral-2)" />
-              <circle cx="24" cy="10" r="1.8" fill="var(--color-accent)" opacity="0.6" />
-              <path d="M 4 10 Q 10 4 18 8 Q 20 9 22 7" stroke="var(--color-floral-3)" strokeWidth="0.7" fill="none" />
-              <path d="M 44 10 Q 38 4 30 8 Q 28 9 26 7" stroke="var(--color-floral-3)" strokeWidth="0.7" fill="none" />
-              <circle cx="8" cy="9" r="1.5" fill="var(--color-floral-1)" opacity="0.6" />
-              <circle cx="40" cy="9" r="1.5" fill="var(--color-floral-1)" opacity="0.6" />
+            <svg width="48" height="20" viewBox="0 0 48 20" fill="none" opacity="0.6">
+              <circle cx="24" cy="10" r="3.5" fill="var(--color-bg-alt)" stroke="var(--color-accent)" strokeWidth="0.5" />
+              <circle cx="24" cy="10" r="1.5" fill="var(--color-accent)" />
+              <path d="M 4 10 Q 10 4 18 8 Q 20 9 22 7" stroke="var(--color-accent)" strokeWidth="0.5" fill="none" />
+              <path d="M 44 10 Q 38 4 30 8 Q 28 9 26 7" stroke="var(--color-accent)" strokeWidth="0.5" fill="none" />
             </svg>
           </div>
 
@@ -146,13 +144,9 @@ export default function CountdownSection() {
 
         {/* Decorative ornament below */}
         <div className="flex justify-center mt-10">
-          <svg width="100" height="24" viewBox="0 0 100 24" fill="none" opacity="0.35">
-            <path d="M 5 12 Q 20 2 50 12 Q 80 22 95 12" stroke="var(--color-accent)" strokeWidth="0.8" fill="none" />
-            <circle cx="25" cy="8" r="2" fill="var(--color-floral-2)" />
+          <svg width="100" height="24" viewBox="0 0 100 24" fill="none" opacity="0.4">
+            <path d="M 5 12 Q 20 2 50 12 Q 80 22 95 12" stroke="var(--color-accent)" strokeWidth="0.5" fill="none" />
             <circle cx="50" cy="12" r="2.5" fill="var(--color-accent)" />
-            <circle cx="75" cy="16" r="2" fill="var(--color-floral-2)" />
-            <circle cx="25" cy="8" r="0.8" fill="var(--color-accent)" />
-            <circle cx="75" cy="16" r="0.8" fill="var(--color-accent)" />
           </svg>
         </div>
       </div>

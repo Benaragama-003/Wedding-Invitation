@@ -17,15 +17,25 @@ export default function LocationSection() {
       <div
         style={{
           width: '100%',
-          maxWidth: 800,
+          maxWidth: 600,
           marginLeft: 'auto',
           marginRight: 'auto',
-          paddingLeft: 'clamp(16px, 4vw, 48px)',
-          paddingRight: 'clamp(16px, 4vw, 48px)',
-          paddingBottom: 48, // room for the overlapping button
+          background: 'var(--color-bg-alt)',
+          border: '0.5px solid rgba(184, 115, 51, 0.20)',
+          borderRadius: 24,
+          boxShadow: '0 16px 48px rgba(107, 76, 122, 0.07)',
+          padding: '44px 32px',
           boxSizing: 'border-box',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
+        {/* Copper corner accents */}
+        <div style={{ position: 'absolute', top: 0, left: 0, width: 28, height: 28, borderTop: '0.5px solid rgba(184,115,51,0.35)', borderLeft: '0.5px solid rgba(184,115,51,0.35)', borderTopLeftRadius: 24 }} />
+        <div style={{ position: 'absolute', top: 0, right: 0, width: 28, height: 28, borderTop: '0.5px solid rgba(184,115,51,0.35)', borderRight: '0.5px solid rgba(184,115,51,0.35)', borderTopRightRadius: 24 }} />
+        <div style={{ position: 'absolute', bottom: 0, left: 0, width: 28, height: 28, borderBottom: '0.5px solid rgba(184,115,51,0.35)', borderLeft: '0.5px solid rgba(184,115,51,0.35)', borderBottomLeftRadius: 24 }} />
+        <div style={{ position: 'absolute', bottom: 0, right: 0, width: 28, height: 28, borderBottom: '0.5px solid rgba(184,115,51,0.35)', borderRight: '0.5px solid rgba(184,115,51,0.35)', borderBottomRightRadius: 24 }} />
+
         {/* ── Title block ── */}
         <ScrollReveal animation="fade-in">
           <div style={{ textAlign: 'center', marginBottom: 36 }}>
