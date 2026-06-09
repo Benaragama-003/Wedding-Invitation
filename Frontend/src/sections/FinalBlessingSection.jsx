@@ -18,7 +18,7 @@ export default function FinalBlessingSection() {
       style={{ background: 'var(--color-bg)' }}>
 
       {/* ── Main content ── */}
-      <div className="invitation-container relative" style={{ zIndex: 20 }}>
+      <div className="invitation-container relative" style={{ zIndex: 2 }}>
         <ScrollReveal animation="fade-in" duration={1.2}>
           <div className="text-center">
             {/* Decorative top flourish */}

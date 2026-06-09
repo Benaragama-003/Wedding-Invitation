@@ -103,15 +103,15 @@ export default function CountdownSection() {
   ];
 
   return (
-    <section id="countdown" className="section-pad relative overflow-visible">
+    <section id="countdown" className="section-pad relative"
+      style={{ overflow: 'hidden' }}
+    >
       {/* ── Petal animation container spanning countdown + blessing sections ── */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           zIndex: 1,
           overflow: 'visible',
-          height: '200vh',
-          top: '-100vh',
         }}
       >
         {/* ── Falling rose petals (elliptical shapes) ── */}
@@ -130,7 +130,7 @@ export default function CountdownSection() {
               opacity: 0.5,
             }}
             animate={{
-              y: ['0vh', '200vh'],
+              y: ['-5%', '120vh'],
               rotate: [i * 45, i * 45 + 360],
               opacity: [0, 0.5, 0.5, 0],
             }}
@@ -145,7 +145,7 @@ export default function CountdownSection() {
         ))}
       </div>
       {/* Soft copper accent bottom-left */}
-      <div className="absolute bottom-0 left-0 pointer-events-none overflow-hidden" style={{ width: 120, height: 120 }}>
+      <div className="absolute bottom-0 left-0 pointer-events-none" style={{ width: 120, height: 120, overflow: 'visible' }}>
         <svg width="120" height="120" viewBox="0 0 120 120" fill="none" opacity="0.10">
           <circle cx="20" cy="100" r="22" fill="var(--color-accent)" />
           <circle cx="35" cy="85" r="16" fill="var(--color-accent)" />
@@ -153,7 +153,7 @@ export default function CountdownSection() {
         </svg>
       </div>
 
-      <div className="container-details relative z-10">
+      <div className="container-details relative" style={{ zIndex: 2 }}>
         <ScrollReveal animation="fade-in" duration={1}>
           {/* Small accent above title */}
           <div className="flex justify-center mb-3">
