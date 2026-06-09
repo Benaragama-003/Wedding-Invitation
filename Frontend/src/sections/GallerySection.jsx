@@ -2,12 +2,6 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScrollReveal from '../components/animations/ScrollReveal';
 
-/* ============================================
-   GALLERY SECTION — "A Peek Into Us"
-   Fanned carousel with pink arrow navigation.
-
-   Replace GALLERY_ITEMS[].src with real photo paths.
-   ============================================ */
 const GALLERY_ITEMS = [
   { id: 1, src: '/Gallery/10.2.jpg', alt: 'Memories together 1' },
   { id: 2, src: '/Gallery/4.jpg', alt: 'Memories together 2' },
@@ -68,6 +62,27 @@ export default function GallerySection() {
   const prev = () => setActive((a) => (a - 1 + total) % total);
   const next = () => setActive((a) => (a + 1) % total);
 
+  // Swipe detection
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => setTouchEndX(e.targetTouches[0].clientX);
+
+  const onTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+    if (distance > minSwipeDistance) next();
+    if (distance < -minSwipeDistance) prev();
+  };
+
+
   // Compute which items appear in the fan
   const visibleItems = GALLERY_ITEMS.map((item, i) => {
     const slot = getSlotIndex(active, i, total);
@@ -103,7 +118,11 @@ export default function GallerySection() {
             alignItems: 'center',
             height: 'clamp(320px, 55vh, 520px)',
             marginBottom: 48,
+            touchAction: 'pan-y', // allows vertical scrolling but handles horizontal swipes
           }}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
         >
           {/* Photos */}
           {visibleItems.map((item) => {
