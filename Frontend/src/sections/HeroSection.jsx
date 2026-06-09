@@ -35,7 +35,7 @@ export default function HeroSection() {
         <img
           src="/16.jpg"
           alt="Wedding couple"
-          className="object-hero-responsive"
+          className="bg-hero-main-responsive"
           style={{
             width: '100%',
             height: '100%',

@@ -401,7 +401,12 @@ body {
   }
 
   .bg-hero-main-responsive {
-    /* Shift left (30%) to show the groom's right arm on the left side */
-    background-position: 30% center !important;
+    /* Shift focal point right (65%) to move the image left, bringing the groom's arm into frame */
+    object-position: 65% center !important;
   }
+}
+
+.bg-hero-main-responsive {
+  /* Desktop: Shift focal point right (60%) to move the image left */
+  object-position: 60% center;
 }
