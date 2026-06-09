@@ -390,6 +390,10 @@ body {
 
 @media (max-width: 768px) {
   .bg-hero-responsive {
-    background-position: 65% 85%;
+    /* Zoom in slightly (112% height) to create vertical overflow, 
+       then align to top (0%) to crop out the bottom dark water.
+       82% horizontally pans right to bring the groom into frame. */
+    background-size: auto 112%;
+    background-position: 82% 0%;
   }
 }
