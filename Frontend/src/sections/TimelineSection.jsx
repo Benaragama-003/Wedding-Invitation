@@ -38,6 +38,7 @@ const BRIEF_DETAILS = [
     icon: locationIcon,
     title: 'Hotel Kashyapa',
     subtitle: 'Avissawella',
+    link: 'https://goo.gl/maps/placeholder',
   },
 ];
 
@@ -154,6 +155,41 @@ export default function TimelineSection() {
                       >
                         {detail.subtitle}
                       </p>
+
+                      {detail.link && (
+                        <motion.a
+                          href={detail.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            marginTop: 14,
+                            padding: '8px 20px',
+                            borderRadius: 50,
+                            background: 'var(--color-accent)',
+                            color: '#FFFFF0',
+                            fontFamily: 'var(--font-body)',
+                            fontSize: 10,
+                            fontWeight: 400,
+                            letterSpacing: '0.15em',
+                            textTransform: 'uppercase',
+                            textDecoration: 'none',
+                            border: '0.5px solid rgba(255,255,240,0.20)',
+                            boxShadow: '0 4px 12px rgba(184,115,51,0.20)',
+                          }}
+                          whileHover={{ scale: 1.03, boxShadow: '0 6px 16px rgba(184,115,51,0.30)' }}
+                          whileTap={{ scale: 0.97 }}
+                        >
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" strokeWidth="2"
+                            style={{ marginRight: 6, opacity: 0.85, flexShrink: 0 }}>
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                          </svg>
+                          View Map
+                        </motion.a>
+                      )}
                     </div>
 
                     {/* Connector line */}

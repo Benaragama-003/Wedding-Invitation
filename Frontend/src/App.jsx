@@ -6,7 +6,6 @@ import LoadingScreen from './sections/LoadingScreen';
 import HeroSection from './sections/HeroSection';
 import CoupleSection from './sections/CoupleSection';
 import TimelineSection from './sections/TimelineSection';
-import LocationSection from './sections/LocationSection';
 import GallerySection from './sections/GallerySection';
 import CountdownSection from './sections/CountdownSection';
 import FinalBlessingSection from './sections/FinalBlessingSection';
@@ -84,7 +83,6 @@ function App() {
             <HeroSection />
             <CoupleSection />
             <TimelineSection />
-            <LocationSection />
             <GallerySection />
             <CountdownSection />
             <FinalBlessingSection />
