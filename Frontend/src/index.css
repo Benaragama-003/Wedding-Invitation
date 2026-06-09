@@ -385,9 +385,9 @@ body {
 .bg-hero-responsive {
   background-image: url('/7.jpg');
   background-size: cover;
-  /* 63% pans right to center the hands perfectly above the ampersand.
+  /* 85% pans right significantly to pull their holding hands to the center over the ampersand.
      10% lowers the image to bring their hands physically closer to the text. */
-  background-position: 63% 10%;
+  background-position: 85% 10%;
 }
 
 @media (max-width: 768px) {
