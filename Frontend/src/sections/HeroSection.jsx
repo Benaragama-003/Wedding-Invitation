@@ -39,7 +39,7 @@ export default function HeroSection() {
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            objectPosition: '20% center',
+            objectPosition: 'calc(20% + 37.8px) center',
           }}
         />
         {/* Dark gradient overlay for text legibility */}

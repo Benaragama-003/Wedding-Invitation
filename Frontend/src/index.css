@@ -388,17 +388,22 @@ body {
   background-position: center 30%;
 }
 
+.bg-hero-main-responsive {
+  /* Shift desktop hero 37.8px to the right */
+  background-position: calc(50% + 37.8px) center !important;
+}
+
 @media (max-width: 768px) {
   .bg-hero-responsive {
     /* Zoom in slightly (112% height) to create vertical overflow, 
        then align to top (0%) to crop out the bottom dark water.
-       75% horizontally brings both bride and groom perfectly into frame, slightly shifted left. */
+       Moved 37.8px to the left per user request */
     background-size: auto 112%;
-    background-position: 75% 0%;
+    background-position: calc(65% - 37.8px) 0%;
   }
 
   .bg-hero-main-responsive {
-    /* Shift left (30%) to show the groom's right arm on the left side */
-    background-position: 30% center !important;
+    /* Shift mobile hero 37.8px to the right */
+    background-position: calc(30% + 37.8px) center !important;
   }
 }
