@@ -95,8 +95,55 @@ export default function CountdownSection() {
     return () => clearInterval(timer);
   }, []);
 
+  // Petal colors: rotate through dusty rose, copper gold, and plum
+  const petalColors = [
+    '#D8A7B1',           // dusty rose
+    'rgba(184, 115, 51, 0.4)',  // copper gold at 40% opacity
+    'rgba(107, 76, 122, 0.3)',  // plum at 30% opacity
+  ];
+
   return (
-    <section id="countdown" className="section-pad relative">
+    <section id="countdown" className="section-pad relative overflow-visible">
+      {/* ── Petal animation container spanning countdown + blessing sections ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          zIndex: 1,
+          overflow: 'visible',
+          height: '200vh',
+          top: '-100vh',
+        }}
+      >
+        {/* ── Falling rose petals (elliptical shapes) ── */}
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={`petal-countdown-${i}`}
+            className="absolute pointer-events-none"
+            style={{
+              left: `${12 + i * 15}%`,
+              top: '-4%',
+              width: 8,
+              height: 14,
+              background: petalColors[i % 3],
+              borderRadius: '60% 40% 60% 40% / 50% 50% 50% 50%',
+              transformOrigin: 'center',
+              opacity: 0.5,
+            }}
+            animate={{
+              y: ['0vh', '200vh'],
+              rotate: [i * 45, i * 45 + 360],
+              opacity: [0, 0.5, 0.5, 0],
+            }}
+            transition={{
+              duration: 22 + i * 3,
+              delay: i * 2,
+              repeat: Infinity,
+              ease: 'linear',
+              times: [0, 0.1, 0.85, 1],
+            }}
+          />
+        ))}
+      </div>
       {/* Soft copper accent bottom-left */}
       <div className="absolute bottom-0 left-0 pointer-events-none overflow-hidden" style={{ width: 120, height: 120 }}>
         <svg width="120" height="120" viewBox="0 0 120 120" fill="none" opacity="0.10">
