@@ -36,7 +36,7 @@ export default function HeroSection() {
             .hero-photo-mobile   → applied only on ≤768 px
         */}
         <img
-          src="/16.jpg"
+          src="/16.png"
           alt="Wedding couple"
           className="hero-photo"
         />
