@@ -1,30 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-/* ============================================
-   HERO SECTION — Full-Screen Editorial
-
-   - Background image with soft overlay
-   - Centered content
-   - "We invite you to attend our wedding"
-   - THE WEDDING OF
-   - Couple names
-   - Date
-
-   IMAGE POSITIONING NOTES
-   ─────────────────────────────────────────────
-   Desktop:
-     objectPosition: '55% 72%'
-     → 55% horizontal  = shifts slightly right so both faces centre in the
-       arch opening (bride is right-of-centre, groom left-of-centre).
-     → 72% vertical    = pulls the image UP so their joined hands sit
-       roughly at vertical mid-screen, aligning with the "&" text.
-
-   Mobile (via CSS class hero-img-mobile):
-     objectFit: contain  → never crops; full bodies always visible.
-     background: #0d1208  → dark fill for any letterbox bars.
-   ============================================ */
-
 const BRIDE_NAME = 'Nilushi Benaragama';
 const GROOM_NAME = 'Sangeeth Bandara';
 const WEDDING_DATE = '16.10.2026';
@@ -42,6 +18,7 @@ export default function HeroSection() {
         width: '100%',
         minHeight: '100dvh',
         overflow: 'hidden',
+        left: 0,
       }}
     >
       {/* ── Full-screen background photo ── */}
@@ -75,13 +52,20 @@ export default function HeroSection() {
       </div>
 
       {/* ── Main content layout ── */}
-      <div
-        className="relative flex flex-col justify-center flex-1 px-4"
-        style={{ zIndex: 10, paddingTop: 60, paddingBottom: 60, width: '100%', alignItems: 'center' }}
-      >
+        <div
+        className="relative flex flex-col items-center justify-center flex-1 px-4"
+        style={{ zIndex: 10, paddingTop: 60, paddingBottom: 60, width: '100%' }}
+         >
         <motion.div
           className="flex flex-col items-center text-center"
-          style={{ width: '100%', maxWidth: '64rem', marginLeft: 'auto', marginRight: 'auto' }}
+          style={{
+            width: '100%',
+            maxWidth: '80rem',
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            textAlign: 'center',
+            alignItems: 'center',
+          }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 0.61, 0.36, 1] }}
