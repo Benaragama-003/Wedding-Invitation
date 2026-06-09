@@ -39,7 +39,7 @@ export default function HeroSection() {
       id="hero"
       className="relative flex flex-col"
       style={{
-        minHeight: '100vh',
+        width: '100%',
         minHeight: '100dvh',
         overflow: 'hidden',
       }}
@@ -76,11 +76,12 @@ export default function HeroSection() {
 
       {/* ── Main content layout ── */}
       <div
-        className="relative flex flex-col items-center justify-center flex-1 w-full px-4"
-        style={{ zIndex: 10, paddingTop: 60, paddingBottom: 60 }}
+        className="relative flex flex-col justify-center flex-1 px-4"
+        style={{ zIndex: 10, paddingTop: 60, paddingBottom: 60, width: '100%', alignItems: 'center' }}
       >
         <motion.div
-          className="flex flex-col items-center text-center w-full max-w-5xl"
+          className="flex flex-col items-center text-center"
+          style={{ width: '100%', maxWidth: '64rem', marginLeft: 'auto', marginRight: 'auto' }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 0.2, ease: [0.22, 0.61, 0.36, 1] }}
