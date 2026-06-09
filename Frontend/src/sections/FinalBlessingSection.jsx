@@ -15,15 +15,10 @@ const WEDDING_DATE = '16.10.2026';
 export default function FinalBlessingSection() {
   return (
     <section id="blessing" className="section-pad relative overflow-visible"
-      style={{ background: 'var(--color-bg-alt, var(--color-bg))' }}>
+      style={{ background: 'var(--color-bg)' }}>
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: `
-            radial-gradient(ellipse at 15% 20%, rgba(183,110,121,0.09) 0%, transparent 50%),
-            radial-gradient(ellipse at 85% 80%, rgba(156,175,136,0.07) 0%, transparent 50%),
-            radial-gradient(ellipse at 50% 50%, rgba(183,110,121,0.05) 0%, transparent 70%)
-          `,
           zIndex: 0,
         }}
       />
