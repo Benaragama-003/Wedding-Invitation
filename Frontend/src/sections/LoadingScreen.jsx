@@ -25,11 +25,8 @@ export default function LoadingScreen({ phase, onOpen }) {
           {/* ── Background Image ── */}
           <div className="absolute inset-0 bg-black">
             <div
-              className="absolute inset-0 w-full h-full"
+              className="absolute inset-0 w-full h-full bg-hero-responsive"
               style={{
-                backgroundImage: 'url(/7.jpg)',
-                backgroundSize: 'cover',
-                backgroundPosition: '65% 85%',
                 animation: phase === 'transition'
                   ? 'portalBackgroundZoom 2s forwards cubic-bezier(0.4, 0, 0.2, 1)'
                   : 'none',

@@ -378,3 +378,18 @@ body {
 }
 
 .scroll-snap-section-auto { scroll-snap-align: start; }
+
+/* ============================================
+   RESPONSIVE HERO BACKGROUND
+   ============================================ */
+.bg-hero-responsive {
+  background-image: url('/7.jpg');
+  background-size: cover;
+  background-position: center 30%;
+}
+
+@media (max-width: 768px) {
+  .bg-hero-responsive {
+    background-position: 65% 85%;
+  }
+}
