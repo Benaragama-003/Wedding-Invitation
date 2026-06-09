@@ -380,32 +380,27 @@ body {
 .scroll-snap-section-auto { scroll-snap-align: start; }
 
 /* ============================================
-   RESPONSIVE HERO BACKGROUND (LOADING SCREEN)
+   RESPONSIVE HERO BACKGROUND
    ============================================ */
 .bg-hero-responsive {
   background-image: url('/7.jpg');
   background-size: cover;
-  background-position: center 30%;
-}
-
-/* ============================================
-   RESPONSIVE HERO OBJECT (MAIN HERO SCREEN)
-   ============================================ */
-.object-hero-responsive {
-  object-position: center;
+  /* 63% pans right to center the hands perfectly above the ampersand.
+     10% lowers the image to bring their hands physically closer to the text. */
+  background-position: 63% 10%;
 }
 
 @media (max-width: 768px) {
   .bg-hero-responsive {
     /* Zoom in slightly (112% height) to create vertical overflow, 
        then align to top (0%) to crop out the bottom dark water.
-       60% horizontally brings both bride and groom perfectly into frame. */
+       65% horizontally brings both bride and groom perfectly into frame. */
     background-size: auto 112%;
-    background-position: 60% 0%;
+    background-position: 65% 0%;
   }
 
-  .object-hero-responsive {
-    /* 30% perfectly frames both bodies on the mobile hero screen */
-    object-position: 30% center !important;
+  .bg-hero-main-responsive {
+    /* Shift left (30%) to show the groom's right arm on the left side */
+    background-position: 30% center !important;
   }
 }
