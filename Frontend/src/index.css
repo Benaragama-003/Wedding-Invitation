@@ -392,9 +392,9 @@ body {
   .bg-hero-responsive {
     /* Zoom in slightly (112% height) to create vertical overflow, 
        then align to top (0%) to crop out the bottom dark water.
-       65% horizontally brings both bride and groom perfectly into frame. */
+       75% horizontally brings both bride and groom perfectly into frame, slightly shifted left. */
     background-size: auto 112%;
-    background-position: 65% 0%;
+    background-position: 75% 0%;
   }
 
   .bg-hero-main-responsive {
