@@ -54,10 +54,11 @@ export default function NavBar() {
                 margin: '0 auto',
                 paddingLeft: '1.5rem',
                 paddingRight: '1.5rem',
+                position: 'relative',
               }}
             >
               {/* ── Left nav links (desktop) ── */}
-              <div className="hidden md:flex items-center gap-8">
+              <div className="hidden md:flex items-center gap-8" style={{ flex: 1 }}>
                 {NAV_LEFT.map((item) => (
                   <NavLink key={item.href} item={item} onClick={() => scrollTo(item.href)} />
                 ))}
@@ -75,13 +76,17 @@ export default function NavBar() {
                   border: 'none',
                   padding: '0 1rem',
                   textShadow: '0 1px 6px rgba(0,0,0,0.30)',
+                  position: 'absolute',
+                  left: '50%',
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)',
                 }}
               >
                 N &amp; S
               </button>
 
               {/* ── Right nav links (desktop) ── */}
-              <div className="hidden md:flex items-center gap-8">
+              <div className="hidden md:flex items-center gap-8 justify-end" style={{ flex: 1 }}>
                 {NAV_RIGHT.map((item) => (
                   <NavLink key={item.href} item={item} onClick={() => scrollTo(item.href)} />
                 ))}
