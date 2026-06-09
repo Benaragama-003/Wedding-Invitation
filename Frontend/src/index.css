@@ -658,14 +658,14 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 62% 46%;
+  object-position: 50% 72%;
 }
 
 /* ── Mobile override ──────────────────────── */
 @media (max-width: 768px) {
   .hero-photo {
     object-fit: cover;
-    object-position: 60% 52%;
+    object-position: 50% 60%;
   }
 }
 
