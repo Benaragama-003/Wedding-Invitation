@@ -666,10 +666,9 @@ body {
 
   /*
     x = 52%  : slight right shift to balance both faces inside arch
-    y = 68%  : push image upward → hands rise to vertical centre
-               (higher % = more of the bottom is shown = image moves UP)
+    y = 84%  : push image upward → aligns the 72% focal point (hands) to the 50% viewport center
   */
-  object-position: 52% 68%;
+  object-position: 52% 84%;
 }
 
 /* ── Mobile override ────────────────────────

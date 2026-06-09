@@ -38,7 +38,7 @@ const BRIEF_DETAILS = [
     icon: locationIcon,
     title: 'Hotel Kashyapa',
     subtitle: 'Avissawella',
-    link: 'https://goo.gl/maps/placeholder',
+    link: 'https://maps.app.goo.gl/YuFFRrASWDusw7eC6',
   },
 ];
 
