@@ -10,104 +10,49 @@ const GROOM = {
   subtitle: 'Beloved son of the Bandara family',
 };
 
-function PersonCard({ person, delay = 0, bgImage }) {
+/* ── Decorative ampersand / heart divider ── */
+function OrnamentalDivider() {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 18, margin: '36px 0' }}>
+      <div style={{ height: '0.5px', width: 60, background: 'linear-gradient(90deg, transparent, var(--color-accent))' }} />
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="1.2" strokeLinecap="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+      </svg>
+      <div style={{ height: '0.5px', width: 60, background: 'linear-gradient(90deg, var(--color-accent), transparent)' }} />
+    </div>
+  );
+}
+
+/* ── Single name block (text-only, no photo) ── */
+function NameBlock({ person, delay = 0 }) {
   return (
     <ScrollReveal animation="fade-up" delay={delay}>
-      <div
-        className="relative overflow-visible group"
-        style={{
-          borderRadius: 20,
-          background: 'var(--color-bg-alt)',
-          border: '0.5px solid rgba(184, 115, 51, 0.22)',
-          boxShadow: '0 16px 48px rgba(107, 76, 122, 0.10)',
-          // No fixed height — let content define height
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
-        {/* Photo area — fixed height */}
-        <div
+      <div style={{ textAlign: 'center', padding: '0 12px' }}>
+        <h3
+          className="font-script"
           style={{
-            height: 400,
-            borderRadius: '20px 20px 0 0',
-            overflow: 'hidden',
-            position: 'relative',
-            flexShrink: 0,
+            color: 'var(--color-text)',
+            fontSize: 'clamp(2.2rem, 5vw, 3.2rem)',
+            fontWeight: 400,
+            lineHeight: 1.2,
+            letterSpacing: '0.01em',
+            margin: '0 0 10px',
           }}
         >
-          <div
-            className="transition-transform duration-1000 group-hover:scale-105"
-            style={{
-              position: 'absolute', inset: 0,
-              backgroundImage: `url(${bgImage})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center top',
-            }}
-          />
-          {/* Gradient fade into card bottom */}
-          <div
-            style={{
-              position: 'absolute', inset: 0,
-              background: `linear-gradient(
-                to bottom,
-                transparent 45%,
-                rgba(248, 246, 240, 0.55) 80%,
-                rgba(248, 246, 240, 0.95) 100%
-              )`,
-            }}
-          />
-        </div>
+          {person.name}
+        </h3>
 
-        {/* Text area — always fully visible, never clipped */}
-        <div
+        <p
+          className="font-serif italic"
           style={{
-            padding: '16px 28px 28px',
-            background: 'var(--color-bg-alt)',
-            borderRadius: '0 0 20px 20px',
-            position: 'relative',
+            color: 'var(--color-text-secondary)',
+            fontSize: 'clamp(0.88rem, 1.8vw, 1.05rem)',
+            lineHeight: 1.55,
+            margin: 0,
           }}
         >
-          {/* Copper accent bar */}
-          <div style={{ width: 32, height: 1, background: 'var(--color-accent)', marginBottom: 10 }} />
-
-          <h3
-            className="font-serif"
-            style={{
-              color: 'var(--color-text)',
-              fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-              fontWeight: 500,
-              lineHeight: 1.2,
-              letterSpacing: '0.01em',
-              margin: '0 0 6px',
-            }}
-          >
-            {person.name}
-          </h3>
-
-          <p
-            className="font-serif italic"
-            style={{
-              color: 'var(--color-text-secondary)',
-              fontSize: 'clamp(0.88rem, 1.8vw, 1rem)',
-              lineHeight: 1.55,
-              margin: 0,
-            }}
-          >
-            {person.subtitle}
-          </p>
-        </div>
-
-        {/* Copper corner accent — top right of photo */}
-        <div
-          style={{
-            position: 'absolute', top: 0, right: 0,
-            width: 44, height: 44,
-            borderTop: '0.5px solid rgba(184, 115, 51, 0.35)',
-            borderRight: '0.5px solid rgba(184, 115, 51, 0.35)',
-            borderTopRightRadius: 20,
-            pointerEvents: 'none',
-          }}
-        />
+          {person.subtitle}
+        </p>
       </div>
     </ScrollReveal>
   );
@@ -123,7 +68,7 @@ export default function CoupleSection() {
       <div
         style={{
           width: '100%',
-          maxWidth: 920,
+          maxWidth: 720,
           marginLeft: 'auto',
           marginRight: 'auto',
           paddingLeft: 'clamp(16px, 4vw, 48px)',
@@ -133,7 +78,7 @@ export default function CoupleSection() {
       >
         {/* ── Heading ── */}
         <ScrollReveal animation="fade-in" duration={1}>
-          <div style={{ textAlign: 'center', marginBottom: 48, marginLeft: 'auto', marginRight: 'auto', maxWidth: 640 }}>
+          <div style={{ textAlign: 'center', marginBottom: 20, marginLeft: 'auto', marginRight: 'auto', maxWidth: 640 }}>
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16, marginBottom: 20 }}>
               <div style={{ height: '0.5px', width: 40, background: 'var(--color-accent)', opacity: 0.5 }} />
@@ -156,18 +101,35 @@ export default function CoupleSection() {
           </div>
         </ScrollReveal>
 
-        {/* ── Cards ── */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: 24,
-            alignItems: 'start', // prevent cards stretching taller than content
-          }}
-        >
-          <PersonCard person={BRIDE} delay={0.1} bgImage="/3.jpg" />
-          <PersonCard person={GROOM} delay={0.2} bgImage="/8.jpg" />
-        </div>
+        {/* ── Elegant text-only card ── */}
+        <ScrollReveal animation="fade-up" delay={0.15}>
+          <div
+            style={{
+              background: 'var(--color-bg-alt)',
+              border: '0.5px solid rgba(184, 115, 51, 0.20)',
+              borderRadius: 24,
+              boxShadow: '0 16px 48px rgba(107, 76, 122, 0.07)',
+              padding: 'clamp(40px, 6vw, 64px) clamp(24px, 5vw, 48px)',
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Corner accents */}
+            <div style={{ position: 'absolute', top: 0, left: 0, width: 32, height: 32, borderTop: '0.5px solid rgba(184,115,51,0.35)', borderLeft: '0.5px solid rgba(184,115,51,0.35)', borderTopLeftRadius: 24 }} />
+            <div style={{ position: 'absolute', top: 0, right: 0, width: 32, height: 32, borderTop: '0.5px solid rgba(184,115,51,0.35)', borderRight: '0.5px solid rgba(184,115,51,0.35)', borderTopRightRadius: 24 }} />
+            <div style={{ position: 'absolute', bottom: 0, left: 0, width: 32, height: 32, borderBottom: '0.5px solid rgba(184,115,51,0.35)', borderLeft: '0.5px solid rgba(184,115,51,0.35)', borderBottomLeftRadius: 24 }} />
+            <div style={{ position: 'absolute', bottom: 0, right: 0, width: 32, height: 32, borderBottom: '0.5px solid rgba(184,115,51,0.35)', borderRight: '0.5px solid rgba(184,115,51,0.35)', borderBottomRightRadius: 24 }} />
+
+            {/* Bride name */}
+            <NameBlock person={BRIDE} delay={0.2} />
+
+            {/* Ornamental divider with heart */}
+            <OrnamentalDivider />
+
+            {/* Groom name */}
+            <NameBlock person={GROOM} delay={0.3} />
+          </div>
+        </ScrollReveal>
       </div>
 
       {/* Bottom divider */}
