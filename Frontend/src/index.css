@@ -627,9 +627,9 @@ body {
    (used by other sections that use background-image)
    ============================================ */
 .bg-hero-responsive {
-  background-image: url('/7.jpg');
-  background-size: 125%;
-  background-position: 100% 20%;
+  background-image: url('/cover photo.png');
+  background-size: 110%;
+  background-position: center;
 }
 
 @media (max-width: 768px) {
@@ -643,17 +643,6 @@ body {
   }
 }
 
-/* ============================================
-   HERO PHOTO — <img> object-fit positioning
-   ─────────────────────────────────────────────
-   Goal: align the couple's joined hands
-   vertically with the "&" text overlay.
-
-   Math: hands at ~78% of photo, & at ~55% of
-   viewport. For cover on 16:9 viewport the
-   rendered height ≈ 1.4× viewport.
-   Y = 78 - (78 - 55) × 1.4 ≈ 46%.
-   ============================================ */
 .hero-photo {
   width: 100%;
   height: 100%;
@@ -675,6 +664,7 @@ body {
     flex-direction: column !important;
     gap: 0.5rem !important;
   }
+
   .names-container h1 {
     max-width: 100% !important;
     font-size: clamp(2.8rem, 9vw, 3.5rem) !important;
