@@ -28,7 +28,7 @@ const locationIcon = (
 const BRIEF_DETAILS = [
   {
     icon: calendarIcon,
-    title: 'Friday, 16th October',
+    title: 'Wednesday, 16th September',
     subtitle: 'The Year Two Thousand Twenty Six',
   },
   {
@@ -385,22 +385,22 @@ export default function TimelineSection() {
             <div
               style={{
                 width: '100%',
-                maxWidth: 520,
+                maxWidth: 580,
                 background: 'var(--color-bg-alt)',
-                border: '0.5px solid rgba(184, 115, 51, 0.20)',
-                borderRadius: 24,
-                boxShadow: '0 16px 48px rgba(107, 76, 122, 0.07)',
-                padding: '44px 32px 40px',
+                border: '1px solid rgba(212, 180, 131, 0.35)', /* Enhanced border */
+                borderRadius: 32, /* Increased radius */
+                boxShadow: '0 24px 64px rgba(94, 74, 66, 0.08)', /* Deeper luxury shadow */
+                padding: '56px 40px 48px', /* Increased padding */
                 boxSizing: 'border-box',
                 position: 'relative',
                 overflow: 'hidden',
               }}
             >
               {/* Copper corner accents */}
-              <div style={{ position: 'absolute', top: 0, left: 0, width: 28, height: 28, borderTop: '0.5px solid rgba(184,115,51,0.35)', borderLeft: '0.5px solid rgba(184,115,51,0.35)', borderTopLeftRadius: 24 }} />
-              <div style={{ position: 'absolute', top: 0, right: 0, width: 28, height: 28, borderTop: '0.5px solid rgba(184,115,51,0.35)', borderRight: '0.5px solid rgba(184,115,51,0.35)', borderTopRightRadius: 24 }} />
-              <div style={{ position: 'absolute', bottom: 0, left: 0, width: 28, height: 28, borderBottom: '0.5px solid rgba(184,115,51,0.35)', borderLeft: '0.5px solid rgba(184,115,51,0.35)', borderBottomLeftRadius: 24 }} />
-              <div style={{ position: 'absolute', bottom: 0, right: 0, width: 28, height: 28, borderBottom: '0.5px solid rgba(184,115,51,0.35)', borderRight: '0.5px solid rgba(184,115,51,0.35)', borderBottomRightRadius: 24 }} />
+              <div style={{ position: 'absolute', top: 0, left: 0, width: 32, height: 32, borderTop: '1px solid rgba(212,180,131,0.5)', borderLeft: '1px solid rgba(212,180,131,0.5)', borderTopLeftRadius: 32 }} />
+              <div style={{ position: 'absolute', top: 0, right: 0, width: 32, height: 32, borderTop: '1px solid rgba(212,180,131,0.5)', borderRight: '1px solid rgba(212,180,131,0.5)', borderTopRightRadius: 32 }} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, width: 32, height: 32, borderBottom: '1px solid rgba(212,180,131,0.5)', borderLeft: '1px solid rgba(212,180,131,0.5)', borderBottomLeftRadius: 32 }} />
+              <div style={{ position: 'absolute', bottom: 0, right: 0, width: 32, height: 32, borderBottom: '1px solid rgba(212,180,131,0.5)', borderRight: '1px solid rgba(212,180,131,0.5)', borderBottomRightRadius: 32 }} />
 
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
                 {BRIEF_DETAILS.map((detail, i) => (
@@ -483,8 +483,8 @@ export default function TimelineSection() {
                     {/* Connector line */}
                     {i < BRIEF_DETAILS.length - 1 && (
                       <div style={{
-                        width: 1, height: 22,
-                        background: 'linear-gradient(to bottom, rgba(184,115,51,0.35), rgba(184,115,51,0.08))',
+                        width: 1, height: 28,
+                        background: 'linear-gradient(to bottom, rgba(212,180,131,0.5), rgba(212,180,131,0.15))',
                       }} />
                     )}
                   </React.Fragment>

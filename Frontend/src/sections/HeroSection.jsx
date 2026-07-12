@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const BRIDE_NAME = 'Nilushi Benaragama';
 const GROOM_NAME = 'Sangeeth Bandara';
-const WEDDING_DATE = '16.10.2026';
+const WEDDING_DATE = '16.09.2026';
 
 export default function HeroSection() {
   const scrollDown = () => {
@@ -12,9 +12,9 @@ export default function HeroSection() {
 
   // Split names for two-line rendering
   const brideFirst = BRIDE_NAME.split(' ')[0];
-  const brideLast  = BRIDE_NAME.split(' ').slice(1).join(' ');
+  const brideLast = BRIDE_NAME.split(' ').slice(1).join(' ');
   const groomFirst = GROOM_NAME.split(' ')[0];
-  const groomLast  = GROOM_NAME.split(' ').slice(1).join(' ');
+  const groomLast = GROOM_NAME.split(' ').slice(1).join(' ');
 
   return (
     <section
@@ -41,27 +41,32 @@ export default function HeroSection() {
           className="hero-photo"
         />
 
-        {/* Dark gradient overlay for text legibility */}
+        {/* Dark gradient overlay for text legibility and depth */}
         <div
           className="absolute inset-0"
           style={{
             background: `
               linear-gradient(to bottom,
-                rgba(30,20,10,0.50) 0%,
-                rgba(30,20,10,0.28) 35%,
-                rgba(30,20,10,0.28) 58%,
-                rgba(30,20,10,0.58) 100%
+                rgba(20,15,10,0.65) 0%,
+                rgba(20,15,10,0.35) 30%,
+                rgba(20,15,10,0.35) 60%,
+                rgba(15,10,5,0.75) 100%
               )
             `,
           }}
         />
       </div>
 
+      {/* ── Floating Particles (Ambient) ── */}
+      <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 5 }}>
+        {/* We can rely on App.jsx's global particles or add local ones if needed */}
+      </div>
+
       {/* ── Main content layout ── */}
-        <div
+      <div
         className="relative flex flex-col items-center justify-center flex-1 px-4"
         style={{ zIndex: 10, paddingTop: 60, paddingBottom: 60, width: '100%' }}
-         >
+      >
         <motion.div
           className="flex flex-col items-center text-center"
           style={{
@@ -96,12 +101,12 @@ export default function HeroSection() {
           <h3
             className="font-body uppercase"
             style={{
-              color: '#FFFFFF',
+              color: 'rgba(255,255,255,0.95)',
               fontSize: 'clamp(1.2rem, 3vw, 1.8rem)',
-              letterSpacing: '0.12em',
+              letterSpacing: '0.25em', /* Increased letter spacing */
               fontWeight: 500,
-              marginBottom: '2.5rem',
-              textShadow: '0 2px 8px rgba(0,0,0,0.5)',
+              marginBottom: '3rem', /* Increased margin */
+              textShadow: '0 2px 12px rgba(0,0,0,0.6)',
             }}
           >
             THE WEDDING OF
@@ -127,12 +132,12 @@ export default function HeroSection() {
               className="font-script"
               style={{
                 color: '#FFFFFF',
-                fontSize: 'clamp(2.4rem, 3.8vw, 3.8rem)',
-                lineHeight: 1.08,
-                textShadow: '0 4px 16px rgba(0,0,0,0.5)',
+                fontSize: 'clamp(2.8rem, 4.5vw, 4.5rem)',
+                lineHeight: 1.15,
+                textShadow: '0 8px 24px rgba(0,0,0,0.6)',
                 textAlign: 'center',
                 flex: '1',
-                maxWidth: '340px',
+                maxWidth: '380px',
                 wordBreak: 'keep-all',
                 overflowWrap: 'break-word',
               }}
@@ -140,13 +145,12 @@ export default function HeroSection() {
               {brideFirst}<br />{brideLast}
             </h1>
 
-            {/* Ampersand */}
             <span
               className="font-script"
               style={{
-                color: '#FFFFFF',
-                fontSize: 'clamp(2.5rem, 3.8vw, 3.8rem)',
-                textShadow: '0 4px 16px rgba(0,0,0,0.5)',
+                color: 'var(--color-floral-2)', /* Soft gold/ivory accent */
+                fontSize: 'clamp(3rem, 4.5vw, 4.5rem)',
+                textShadow: '0 8px 24px rgba(0,0,0,0.6)',
                 flexShrink: 0,
                 width: '70px',
                 textAlign: 'center',
@@ -158,17 +162,16 @@ export default function HeroSection() {
               &amp;
             </span>
 
-            {/* Groom */}
             <h1
               className="font-script"
               style={{
                 color: '#FFFFFF',
-                fontSize: 'clamp(2.4rem, 3.8vw, 3.8rem)',
-                lineHeight: 1.08,
-                textShadow: '0 4px 16px rgba(0,0,0,0.5)',
+                fontSize: 'clamp(2.8rem, 4.5vw, 4.5rem)',
+                lineHeight: 1.15,
+                textShadow: '0 8px 24px rgba(0,0,0,0.6)',
                 textAlign: 'center',
                 flex: '1',
-                maxWidth: '340px',
+                maxWidth: '380px',
                 wordBreak: 'keep-all',
                 overflowWrap: 'break-word',
               }}
@@ -209,29 +212,30 @@ export default function HeroSection() {
 
       {/* ── Scroll-down chevron ── */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 cursor-pointer"
         style={{ zIndex: 20 }}
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.4, duration: 0.8 }}
+        transition={{ delay: 1.4, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         onClick={scrollDown}
       >
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+          whileHover={{ scale: 1.1, filter: 'drop-shadow(0 0 8px rgba(255,255,255,0.6))' }}
         >
-          <svg width="32" height="20" viewBox="0 0 32 20" fill="none">
+          <svg width="36" height="24" viewBox="0 0 32 20" fill="none">
             <path
               d="M4 4 L16 14 L28 4"
-              stroke="rgba(255,255,255,0.8)"
-              strokeWidth="2"
+              stroke="rgba(255,255,255,0.9)"
+              strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
             <path
               d="M4 0 L16 10 L28 0"
-              stroke="rgba(255,255,255,0.4)"
-              strokeWidth="2"
+              stroke="rgba(255,255,255,0.3)"
+              strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
             />

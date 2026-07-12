@@ -8,7 +8,7 @@ import CoupleSection from './sections/CoupleSection';
 import TimelineSection from './sections/TimelineSection';
 import GallerySection from './sections/GallerySection';
 import CountdownSection from './sections/CountdownSection';
-import FinalBlessingSection from './sections/FinalBlessingSection';
+import RSVPSection from './sections/RSVPSection';
 
 /* ============================================
    MAIN APP — Premium Cinematic Wedding Invitation
@@ -37,7 +37,7 @@ function App() {
     // We wait for it to complete before revealing the main app.
     setTimeout(() => {
       setPhase('main');
-    }, 2000); // 2 second cinematic transition duration
+    }, 1500); // 1.5 second cinematic transition duration
   };
 
   return (
@@ -54,15 +54,15 @@ function App() {
         <motion.div
           className="relative"
           style={{ backgroundColor: 'var(--color-bg)' }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2, ease: 'easeOut' }}
+          initial={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+          transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
         >
           {/* ── Transparent NavBar (hero-only) ── */}
           <NavBar />
 
           {/* ── Ambient background layers (over all sections) ── */}
-          <FloatingParticles petalCount={12} wheatCount={0} glowCount={0} dustCount={0} />
+          <FloatingParticles petalCount={16} wheatCount={0} glowCount={0} dustCount={0} />
 
           {/* ── Soft ambient shimmer ── */}
           <motion.div
@@ -83,9 +83,9 @@ function App() {
             <HeroSection />
             <CoupleSection />
             <TimelineSection />
+            <RSVPSection />
             <GallerySection />
             <CountdownSection />
-            <FinalBlessingSection />
           </main>
         </motion.div>
       )}

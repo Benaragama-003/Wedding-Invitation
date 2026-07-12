@@ -22,9 +22,9 @@ function Petal({ delay, duration, startX, size, colorIdx }) {
   ];
   const color = colors[colorIdx % colors.length];
   const initRotate = (startX * 3.7) % 360;
-  const driftX1 =  (startX % 2 === 0 ? 1 : -1) * (20 + (size * 2));
+  const driftX1 = (startX % 2 === 0 ? 1 : -1) * (20 + (size * 2));
   const driftX2 = -driftX1 * 0.6;
-  const driftX3 =  driftX1 * 0.35;
+  const driftX3 = driftX1 * 0.35;
 
   return (
     <motion.div
@@ -40,7 +40,7 @@ function Petal({ delay, duration, startX, size, colorIdx }) {
         willChange: 'transform, opacity',
       }}
       animate={{
-        y: ['0vh', '112vh'],
+        y: ['-5vh', '115vh'],
         x: [0, driftX1, driftX2, driftX3],
         rotate: [initRotate, initRotate + 360 + (startX % 2 === 0 ? 120 : -90)],
         opacity: [0, 0.8, 0.75, 0.7, 0],
@@ -101,7 +101,7 @@ function GlowParticle({ delay, duration, x, y, size, colorIdx }) {
       }}
       animate={{
         opacity: [0.08, 0.38, 0.08],
-        scale:   [0.8, 1.22, 0.8],
+        scale: [0.8, 1.22, 0.8],
         x: [0, (colorIdx % 2 === 0 ? 1 : -1) * 18, 0],
         y: [0, (colorIdx % 3 === 0 ? 1 : -1) * 14, 0],
       }}
@@ -114,7 +114,7 @@ function GlowParticle({ delay, duration, x, y, size, colorIdx }) {
 function DustMote({ delay, x, y }) {
   const size = 2 + (x % 3) * 0.7;
   const colors = ['#C9A97A', '#B76E79', '#9CAF88'];
-  const color  = colors[Math.floor(y) % 3];
+  const color = colors[Math.floor(y) % 3];
   return (
     <motion.div
       className="fixed pointer-events-none rounded-full"
@@ -145,56 +145,56 @@ function DustMote({ delay, x, y }) {
 export default function FloatingParticles({
   petalCount = 14,
   wheatCount = 3,
-  glowCount  = 8,
-  dustCount  = 10,
+  glowCount = 8,
+  dustCount = 10,
 }) {
   const petals = useMemo(() =>
     Array.from({ length: petalCount }, (_, i) => ({
       id: `petal-${i}`,
-      delay:    i * 3.2 + (i * 7 % 5),
+      delay: i * 3.2 + (i * 7 % 5),
       duration: 16 + (i * 3 % 14),
-      startX:   (i * 7.3 + 3) % 97,
-      size:     6  + (i * 3 % 9),
+      startX: (i * 7.3 + 3) % 97,
+      size: 6 + (i * 3 % 9),
       colorIdx: i,
     })),
-  [petalCount]);
+    [petalCount]);
 
   const wheats = useMemo(() =>
     Array.from({ length: wheatCount }, (_, i) => ({
       id: `wheat-${i}`,
-      delay:    i * 8 + (i * 5 % 7),
+      delay: i * 8 + (i * 5 % 7),
       duration: 22 + (i * 4 % 12),
-      startX:   (i * 33 + 15) % 90,
+      startX: (i * 33 + 15) % 90,
     })),
-  [wheatCount]);
+    [wheatCount]);
 
   const glows = useMemo(() =>
     Array.from({ length: glowCount }, (_, i) => ({
       id: `glow-${i}`,
-      delay:    i * 1.8 + (i % 3),
+      delay: i * 1.8 + (i % 3),
       duration: 7 + (i * 2 % 7),
-      x:        (i * 12.5 + 5) % 95,
-      y:        (i * 13.7 + 8) % 90,
-      size:     28 + (i * 11 % 44),
+      x: (i * 12.5 + 5) % 95,
+      y: (i * 13.7 + 8) % 90,
+      size: 28 + (i * 11 % 44),
       colorIdx: i,
     })),
-  [glowCount]);
+    [glowCount]);
 
   const dusts = useMemo(() =>
     Array.from({ length: dustCount }, (_, i) => ({
       id: `dust-${i}`,
       delay: i * 1.1 + (i % 4),
-      x:     (i * 10.3 + 2) % 96,
-      y:     28 + (i * 7.1 % 58),
+      x: (i * 10.3 + 2) % 96,
+      y: 28 + (i * 7.1 % 58),
     })),
-  [dustCount]);
+    [dustCount]);
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 3 }}>
-      {petals.map((p) => <Petal      key={p.id} {...p} />)}
+    <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 15 }}>
+      {petals.map((p) => <Petal key={p.id} {...p} />)}
       {wheats.map((w) => <WheatGrain key={w.id} {...w} />)}
-      {glows.map ((g) => <GlowParticle key={g.id} {...g} />)}
-      {dusts.map ((d) => <DustMote   key={d.id} {...d} />)}
+      {glows.map((g) => <GlowParticle key={g.id} {...g} />)}
+      {dusts.map((d) => <DustMote key={d.id} {...d} />)}
     </div>
   );
 }

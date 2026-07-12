@@ -79,10 +79,11 @@ export default function WeddingDetails() {
                 <div
                   className="flex items-center gap-6 rounded-xl"
                   style={{
-                    padding: '20px 24px',
-                    background: 'rgba(255,253,248,0.95)',
-                    border: '1px solid rgba(183,110,121,0.15)',
-                    boxShadow: '-4px 6px 20px rgba(183,110,121,0.06), 0 1px 3px rgba(0,0,0,0.02)',
+                    padding: '24px 32px',
+                    background: 'var(--color-bg-alt)',
+                    border: '1px solid var(--color-glass-border)',
+                    boxShadow: '0 12px 32px var(--color-shadow), 0 2px 4px var(--color-shadow)',
+                    borderRadius: 24,
                   }}
                 >
                   {/* Icon circle — sage bg */}
@@ -90,8 +91,8 @@ export default function WeddingDetails() {
                     className="flex-shrink-0 rounded-full flex items-center justify-center"
                     style={{
                       width: 48, height: 48,
-                      background: 'rgba(156,175,136,0.15)',
-                      border: '1px solid rgba(156,175,136,0.4)',
+                      background: 'var(--color-pink-light)',
+                      border: '1px solid var(--color-pink)',
                     }}
                   >
                     {detail.icon}

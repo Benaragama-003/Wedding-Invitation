@@ -1,14 +1,7 @@
 import React from 'react';
 import ScrollReveal from '../components/animations/ScrollReveal';
 
-const BRIDE = {
-  name: 'Nilushi Benaragama',
-  subtitle: 'Beloved daughter of the Benaragama family',
-};
-const GROOM = {
-  name: 'Sangeeth Bandara',
-  subtitle: 'Beloved son of the Bandara family',
-};
+// Removed BRIDE and GROOM constants as they are hardcoded in the new layout.
 
 /* ── Decorative ampersand / heart divider ── */
 function OrnamentalDivider() {
@@ -23,42 +16,13 @@ function OrnamentalDivider() {
   );
 }
 
-/* ── Single name block (text-only, no photo) ── */
-function NameBlock({ person, delay = 0 }) {
-  return (
-    <ScrollReveal animation="fade-up" delay={delay}>
-      <div style={{ textAlign: 'center', padding: '0 12px' }}>
-        <h3
-          className="font-script"
-          style={{
-            color: 'var(--color-text)',
-            fontSize: 'clamp(2.2rem, 5vw, 3.2rem)',
-            fontWeight: 400,
-            lineHeight: 1.2,
-            letterSpacing: '0.01em',
-            margin: '0 0 10px',
-          }}
-        >
-          {person.name}
-        </h3>
-
-        <p
-          className="font-serif italic"
-          style={{
-            color: 'var(--color-text-secondary)',
-            fontSize: 'clamp(0.88rem, 1.8vw, 1.05rem)',
-            lineHeight: 1.55,
-            margin: 0,
-          }}
-        >
-          {person.subtitle}
-        </p>
-      </div>
-    </ScrollReveal>
-  );
-}
+// NameBlock is no longer used, removed.
 
 export default function CoupleSection() {
+  const searchParams = new URLSearchParams(window.location.search);
+  const guestParam = searchParams.get('guest');
+  const guestName = guestParam ? decodeURIComponent(guestParam) : 'Our Dear Guest';
+
   return (
     <section
       id="couple"
@@ -101,33 +65,115 @@ export default function CoupleSection() {
           </div>
         </ScrollReveal>
 
-        {/* ── Elegant text-only card ── */}
+        {/* ── Invitation Card Text Layout ── */}
         <ScrollReveal animation="fade-up" delay={0.15}>
           <div
             style={{
               background: 'var(--color-bg-alt)',
-              border: '0.5px solid rgba(184, 115, 51, 0.20)',
+              border: '1px solid var(--color-glass-border)',
               borderRadius: 24,
-              boxShadow: '0 16px 48px rgba(107, 76, 122, 0.07)',
-              padding: 'clamp(40px, 6vw, 64px) clamp(24px, 5vw, 48px)',
+              boxShadow: '0 12px 32px var(--color-shadow), 0 2px 4px var(--color-shadow)',
+              padding: 'clamp(48px, 8vw, 80px) clamp(24px, 5vw, 48px)',
               position: 'relative',
               overflow: 'hidden',
+              textAlign: 'center',
             }}
           >
             {/* Corner accents */}
-            <div style={{ position: 'absolute', top: 0, left: 0, width: 32, height: 32, borderTop: '0.5px solid rgba(184,115,51,0.35)', borderLeft: '0.5px solid rgba(184,115,51,0.35)', borderTopLeftRadius: 24 }} />
-            <div style={{ position: 'absolute', top: 0, right: 0, width: 32, height: 32, borderTop: '0.5px solid rgba(184,115,51,0.35)', borderRight: '0.5px solid rgba(184,115,51,0.35)', borderTopRightRadius: 24 }} />
-            <div style={{ position: 'absolute', bottom: 0, left: 0, width: 32, height: 32, borderBottom: '0.5px solid rgba(184,115,51,0.35)', borderLeft: '0.5px solid rgba(184,115,51,0.35)', borderBottomLeftRadius: 24 }} />
-            <div style={{ position: 'absolute', bottom: 0, right: 0, width: 32, height: 32, borderBottom: '0.5px solid rgba(184,115,51,0.35)', borderRight: '0.5px solid rgba(184,115,51,0.35)', borderBottomRightRadius: 24 }} />
+            <div style={{ position: 'absolute', top: 0, left: 0, width: 40, height: 40, borderTop: '1px solid var(--color-accent)', borderLeft: '1px solid var(--color-accent)', borderTopLeftRadius: 24, opacity: 0.5 }} />
+            <div style={{ position: 'absolute', top: 0, right: 0, width: 40, height: 40, borderTop: '1px solid var(--color-accent)', borderRight: '1px solid var(--color-accent)', borderTopRightRadius: 24, opacity: 0.5 }} />
+            <div style={{ position: 'absolute', bottom: 0, left: 0, width: 40, height: 40, borderBottom: '1px solid var(--color-accent)', borderLeft: '1px solid var(--color-accent)', borderBottomLeftRadius: 24, opacity: 0.5 }} />
+            <div style={{ position: 'absolute', bottom: 0, right: 0, width: 40, height: 40, borderBottom: '1px solid var(--color-accent)', borderRight: '1px solid var(--color-accent)', borderBottomRightRadius: 24, opacity: 0.5 }} />
 
-            {/* Bride name */}
-            <NameBlock person={BRIDE} delay={0.2} />
+            {/* Couple Names */}
+            <h1
+              className="font-script"
+              style={{
+                color: 'var(--color-accent)', /* Gold color for names */
+                fontSize: 'clamp(3.5rem, 8vw, 5rem)',
+                lineHeight: 1.1,
+                marginBottom: '2rem',
+                textShadow: '0 2px 12px rgba(184,115,51,0.15)',
+              }}
+            >
+              Nilushi &amp; Sangeeth
+            </h1>
 
-            {/* Ornamental divider with heart */}
-            <OrnamentalDivider />
+            {/* Parents block */}
+            <div
+              className="font-body"
+              style={{
+                color: 'var(--color-text-secondary)',
+                fontSize: 'clamp(0.7rem, 2vw, 0.85rem)',
+                letterSpacing: '0.18em',
+                lineHeight: 2,
+                textTransform: 'uppercase',
+                marginBottom: '2.5rem',
+              }}
+            >
+              <p style={{ marginBottom: 8, fontWeight: 500 }}>Together with their parents</p>
+              <p style={{ color: 'var(--color-text)', fontWeight: 600 }}>Mr. &amp; Mrs. Benaragama</p>
+              <p style={{ margin: '4px 0', fontSize: '0.65rem' }}>and</p>
+              <p style={{ color: 'var(--color-text)', fontWeight: 600 }}>Mr. &amp; Mrs. Bandara</p>
+            </div>
 
-            {/* Groom name */}
-            <NameBlock person={GROOM} delay={0.3} />
+            <p
+              className="font-body uppercase"
+              style={{
+                color: 'var(--color-text-secondary)',
+                fontSize: 'clamp(0.75rem, 2vw, 0.9rem)',
+                letterSpacing: '0.2em',
+                marginBottom: '1.5rem',
+              }}
+            >
+              Take pleasure in inviting
+            </p>
+
+            {/* ── Guest Invitation Focal Block ── */}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                padding: '28px 0',
+              }}
+            >
+              {/* Top Gold Divider */}
+              <div style={{ width: 100, height: 1, background: 'linear-gradient(90deg, transparent, var(--color-accent), transparent)', marginBottom: 28 }} />
+
+              {/* Guest Name */}
+              <h2
+                className="font-script"
+                style={{
+                  color: 'var(--color-accent)',
+                  fontSize: 'clamp(2.5rem, 6vw, 3.5rem)',
+                  lineHeight: 1.2,
+                  margin: 0,
+                  textShadow: '0 2px 8px rgba(184,115,51,0.1)',
+                  textAlign: 'center',
+                }}
+              >
+                {guestName}
+              </h2>
+
+              {/* Bottom Gold Divider */}
+              <div style={{ width: 100, height: 1, background: 'linear-gradient(90deg, transparent, var(--color-accent), transparent)', marginTop: 28 }} />
+            </div>
+
+            <p
+              className="font-body uppercase"
+              style={{
+                color: 'var(--color-text-secondary)',
+                fontSize: 'clamp(0.75rem, 2vw, 0.9rem)',
+                letterSpacing: '0.2em',
+                marginTop: '1.5rem',
+                marginBottom: 0,
+              }}
+            >
+              To celebrate their marriage
+            </p>
           </div>
         </ScrollReveal>
       </div>

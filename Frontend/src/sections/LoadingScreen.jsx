@@ -6,7 +6,7 @@ const GROOM_NAME = 'Sangeeth';
 
 export default function LoadingScreen({ phase, onOpen }) {
   const searchParams = new URLSearchParams(window.location.search);
-  const GUEST_NAME = searchParams.get('to') || '';
+  const GUEST_NAME = searchParams.get('guest') || '';
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -22,39 +22,70 @@ export default function LoadingScreen({ phase, onOpen }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 1, ease: 'easeInOut' }}
         >
-          {/* ── Background Image ── */}
+          {/* ── Background Image (Darkens and scales on transition) ── */}
           <div className="absolute inset-0 bg-black">
-            <div
+            <motion.div
               className="absolute inset-0 w-full h-full bg-hero-responsive"
-              style={{
-                animation: phase === 'transition'
-                  ? 'portalBackgroundZoom 2s forwards cubic-bezier(0.4, 0, 0.2, 1)'
-                  : 'none',
-              }}
+              initial={{ scale: 1, filter: 'brightness(1) blur(0px)' }}
+              animate={phase === 'transition' ? { scale: 1.08, filter: 'brightness(0.4) blur(6px)' } : { scale: 1, filter: 'brightness(1) blur(0px)' }}
+              transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
             />
-            <div
+            <motion.div
               className="absolute inset-0"
               style={{
                 background: `linear-gradient(to bottom,
-                  rgba(30,20,10,0.3) 0%,
-                  rgba(30,20,10,0.15) 40%,
-                  rgba(30,20,10,0.4) 75%,
-                  rgba(0,0,0,0.72) 100%)`,
-                animation: phase === 'transition'
-                  ? 'radialDistortion 2s forwards cubic-bezier(0.4, 0, 0.2, 1)'
-                  : 'none',
+                  rgba(30,20,10,0.4) 0%,
+                  rgba(30,20,10,0.2) 40%,
+                  rgba(30,20,10,0.5) 75%,
+                  rgba(0,0,0,0.85) 100%)`,
               }}
+              initial={{ opacity: 1 }}
+              animate={phase === 'transition' ? { opacity: 0.8 } : { opacity: 1 }}
+              transition={{ duration: 1.4, ease: 'easeInOut' }}
             />
           </div>
 
-          {/* ── Main Content ── */}
-          <div
+          {/* ── Golden converging point (only during transition) ── */}
+          <motion.div
+            className="absolute top-1/2 left-1/2 rounded-full pointer-events-none"
+            style={{ width: 6, height: 6, background: '#E9D7B5', boxShadow: '0 0 24px 8px rgba(212,180,131,0.6)', x: '-50%', y: '-50%', zIndex: 50 }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={phase === 'transition' ? { scale: [0, 2, 0], opacity: [0, 1, 0] } : { scale: 0, opacity: 0 }}
+            transition={{ duration: 1.4, times: [0, 0.8, 1], ease: 'easeInOut' }}
+          />
+
+          {/* ── Gold Particles Drifting Inward ── */}
+          {phase === 'transition' && (
+            <div className="absolute inset-0 pointer-events-none" style={{ zIndex: 40 }}>
+              {[...Array(18)].map((_, i) => {
+                const angle = (i * 20) * (Math.PI / 180);
+                const dist = 300 + Math.random() * 300;
+                const tx = Math.cos(angle) * dist;
+                const ty = Math.sin(angle) * dist;
+                return (
+                  <motion.div
+                    key={`inward-particle-${i}`}
+                    className="absolute top-1/2 left-1/2 rounded-full"
+                    style={{
+                      width: 2.5, height: 2.5,
+                      background: '#E9D7B5',
+                      boxShadow: '0 0 6px rgba(212,180,131,0.8)',
+                    }}
+                    initial={{ x: `calc(-50% + ${tx}px)`, y: `calc(-50% + ${ty}px)`, opacity: 0, scale: 0 }}
+                    animate={{ x: '-50%', y: '-50%', opacity: [0, 0.8, 0], scale: [0, 1.2, 0] }}
+                    transition={{ duration: 1.2, delay: Math.random() * 0.2, ease: [0.34, 0.1, 0.36, 1] }}
+                  />
+                );
+              })}
+            </div>
+          )}
+
+          {/* ── Main Content (Pulls inward to black hole) ── */}
+          <motion.div
             className="relative flex-1 flex flex-col items-center justify-center w-full px-4"
-            style={{
-              animation: phase === 'transition'
-                ? 'portalVortexPull 2s forwards cubic-bezier(0.5, 0, 0.2, 1)'
-                : 'none',
-            }}
+            initial={{ scale: 1, filter: 'blur(0px)', opacity: 1 }}
+            animate={phase === 'transition' ? { scale: 0, filter: 'blur(12px)', opacity: [1, 0.8, 0] } : { scale: 1, filter: 'blur(0px)', opacity: 1 }}
+            transition={{ duration: 1.4, ease: [0.34, 0.05, 0.36, 1] }} // smooth, non-aggressive pull
           >
             <motion.div
               className="text-center mb-4 mt-12"
@@ -98,15 +129,13 @@ export default function LoadingScreen({ phase, onOpen }) {
             >
               <CircularFrame brideName={BRIDE_NAME} groomName={GROOM_NAME} />
             </motion.div>
-          </div>
+          </motion.div>
 
-          {/* ── Bottom Button — never cropped ── */}
+          {/* ── Bottom Button (Fades out) ── */}
           <div
             className="relative w-full flex-shrink-0"
             style={{
               zIndex: 10,
-              opacity: phase === 'transition' ? 0 : 1,
-              transition: 'opacity 0.4s ease',
               paddingBottom: 'max(env(safe-area-inset-bottom, 0px) + 40px, 44px)',
               paddingTop: 0,
             }}
@@ -114,10 +143,10 @@ export default function LoadingScreen({ phase, onOpen }) {
             <motion.div
               className="flex flex-col items-center w-full"
               initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.9, ease: [0.22, 0.61, 0.36, 1] }}
+              animate={phase === 'transition' ? { opacity: 0, y: 30 } : { opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: [0.22, 0.61, 0.36, 1] }}
             >
-              {/* Animated chevron — floats with clear gap above button */}
+              {/* Animated chevron */}
               <motion.div
                 className="cursor-pointer"
                 style={{ marginBottom: 20 }}
@@ -164,7 +193,7 @@ export default function LoadingScreen({ phase, onOpen }) {
                   background: 'rgba(255,255,255,0.17)',
                   borderColor: 'rgba(255,255,255,0.60)',
                 }}
-                whileTap={{ scale: 0.97 }}
+                whileTap={{ scale: 0.95 }}
               >
                 <svg
                   width="14" height="14" viewBox="0 0 24 24"
@@ -194,51 +223,32 @@ function CircularFrame({ brideName, groomName }) {
   const size = 'clamp(300px, 80vw, 450px)';
   return (
     <div style={{ position: 'relative', width: size, height: size }}>
-      <svg
+      <motion.svg
         viewBox="0 0 400 400"
         style={{
           width: '100%', height: '100%', display: 'block',
-          filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.5))',
+          filter: 'drop-shadow(0 4px 16px rgba(0,0,0,0.3))',
         }}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        animate={{ scale: [1, 1.015, 1] }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
       >
-        <circle cx="200" cy="200" r="180" stroke="rgba(255,255,255,0.9)" strokeWidth="1.5" />
-        <circle cx="200" cy="200" r="172" stroke="rgba(255,255,255,0.5)" strokeWidth="1" />
+        {/* Outer elegant thin ring */}
+        <circle cx="200" cy="200" r="185" stroke="rgba(255,255,255,0.85)" strokeWidth="0.5" />
+        
+        {/* Inner subtle dashed ring for depth */}
+        <circle cx="200" cy="200" r="172" stroke="rgba(255,255,255,0.4)" strokeWidth="0.5" strokeDasharray="6 8" />
 
-        {/* Top cluster */}
-        <g transform="translate(200, 20)">
-          <path d="M-30 0 Q-15 -15 0 0 Q-15 15 -30 0 Z" fill="rgba(255,255,255,0.9)" transform="rotate(-30)" />
-          <path d="M30 0 Q15 -15 0 0 Q15 15 30 0 Z" fill="rgba(255,255,255,0.9)" transform="rotate(30)" />
-          <path d="M-15 -20 Q0 -35 15 -20 Q0 -5 -15 -20 Z" fill="rgba(255,255,255,0.9)" />
-        </g>
+        {/* Top elegant monogram anchor */}
+        <circle cx="200" cy="15" r="12" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.5)" strokeWidth="0.5" />
+        <text x="200" y="19" fill="rgba(255,255,255,0.9)" fontSize="10" fontFamily="var(--font-serif)" textAnchor="middle" letterSpacing="1">N&amp;S</text>
+        
+        {/* Bottom subtle anchor dot */}
+        <circle cx="200" cy="385" r="3" fill="rgba(255,255,255,0.5)" />
+      </motion.svg>
 
-        {/* Bottom cluster */}
-        <g transform="translate(200, 380) rotate(180)">
-          <path d="M-30 0 Q-15 -15 0 0 Q-15 15 -30 0 Z" fill="rgba(255,255,255,0.9)" transform="rotate(-30)" />
-          <path d="M30 0 Q15 -15 0 0 Q15 15 30 0 Z" fill="rgba(255,255,255,0.9)" transform="rotate(30)" />
-          <path d="M-15 -20 Q0 -35 15 -20 Q0 -5 -15 -20 Z" fill="rgba(255,255,255,0.9)" />
-        </g>
-
-        {/* Scattered leaf accents */}
-        {[...Array(8)].map((_, i) => {
-          if (i === 2 || i === 6) return null;
-          const angle = i * (360 / 8);
-          const rad = (angle * Math.PI) / 180;
-          const cx = 200 + 176 * Math.cos(rad);
-          const cy = 200 + 176 * Math.sin(rad);
-          return (
-            <path
-              key={i}
-              d="M-8 0 Q0 -10 8 0 Q0 10 -8 0 Z"
-              fill="rgba(255,255,255,0.8)"
-              transform={`translate(${cx},${cy}) rotate(${angle + 90}) scale(1.2)`}
-            />
-          );
-        })}
-      </svg>
-
-      {/* Couple names */}
+      {/* Couple names perfectly centered */}
       <div
         className="absolute inset-0 flex flex-col items-center justify-center"
         style={{ padding: '15%' }}
@@ -254,10 +264,10 @@ function CircularFrame({ brideName, groomName }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 1 }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ fontSize: 'clamp(3rem, 10vw, 5rem)' }}>{groomName}</span>
-            <span style={{ fontSize: 'clamp(2rem, 6vw, 3.5rem)', fontFamily: 'var(--font-script)' }}>&amp;</span>
-            <span style={{ fontSize: 'clamp(3rem, 10vw, 5rem)' }}>{brideName}</span>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: 'clamp(3.5rem, 12vw, 6rem)' }}>{groomName}</span>
+            <span style={{ fontSize: 'clamp(2rem, 6vw, 3rem)', fontFamily: 'var(--font-script)', opacity: 0.7, transform: 'rotate(-5deg)' }}>&amp;</span>
+            <span style={{ fontSize: 'clamp(3.5rem, 12vw, 6rem)' }}>{brideName}</span>
           </div>
         </motion.h1>
       </div>

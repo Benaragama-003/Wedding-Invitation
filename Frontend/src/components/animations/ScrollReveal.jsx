@@ -60,9 +60,13 @@ export default function ScrollReveal({
       animate={isInView ? 'visible' : 'hidden'}
       variants={selectedVariant}
       transition={{
-        duration,
+        duration: duration * 1.2, // Slightly longer for cinematic feel
         delay,
-        ease: [0.22, 0.61, 0.36, 1],
+        type: 'spring',
+        bounce: 0.15,
+        stiffness: 80,
+        damping: 20,
+        restDelta: 0.001
       }}
       className={className}
     >

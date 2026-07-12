@@ -141,10 +141,10 @@ export default function GallerySection() {
                   overflow: 'hidden',
                   cursor: isSide ? 'pointer' : 'default',
                   boxShadow: slot === 0
-                    ? '0 16px 60px rgba(0,0,0,0.22), 0 4px 16px rgba(0,0,0,0.12)'
-                    : '0 8px 30px rgba(0,0,0,0.14)',
-                  border: '6px solid #fff',
-                  background: '#f0ebe4',
+                    ? '0 24px 64px rgba(94, 74, 66, 0.25), 0 8px 24px rgba(94, 74, 66, 0.15)'
+                    : '0 12px 32px rgba(94, 74, 66, 0.15)',
+                  border: slot === 0 ? '6px solid var(--color-bg-alt)' : '4px solid var(--color-bg-alt)',
+                  background: 'var(--color-bg-alt)',
                 }}
                 animate={{
                   rotate: styles.rotate,
@@ -154,7 +154,7 @@ export default function GallerySection() {
                   filter: styles.filter,
                   zIndex: styles.zIndex,
                 }}
-                transition={{ type: 'spring', stiffness: 260, damping: 30 }}
+                transition={{ type: 'spring', stiffness: 100, damping: 20, mass: 1 }}
                 onClick={isSide ? (slot === -1 ? prev : next) : undefined}
               >
                 <img
@@ -173,11 +173,12 @@ export default function GallerySection() {
                   >
                     <div
                       style={{
-                        width: 44, height: 44,
+                        width: 48, height: 48,
                         borderRadius: '50%',
-                        background: 'rgba(184,115,51,0.88)',
+                        background: 'rgba(212, 180, 131, 0.88)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
+                        boxShadow: '0 4px 16px rgba(94, 74, 66, 0.25)',
+                        border: '1px solid rgba(255, 255, 255, 0.4)',
                       }}
                     >
                       {slot === -1 ? (
@@ -205,15 +206,16 @@ export default function GallerySection() {
               position: 'absolute',
               left: 0, top: '50%', transform: 'translateY(-50%)',
               zIndex: 20,
-              width: 44, height: 44, borderRadius: '50%',
-              background: 'rgba(184,115,51,0.80)',
-              border: '2px solid rgba(184,115,51,0.5)',
+              width: 48, height: 48, borderRadius: '50%',
+              background: 'rgba(212, 180, 131, 0.85)',
+              border: '1px solid rgba(255, 255, 255, 0.4)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               cursor: 'pointer',
-              boxShadow: '0 2px 12px rgba(0,0,0,0.12)',
+              boxShadow: '0 4px 16px rgba(94, 74, 66, 0.25)',
+              transition: 'transform 0.2s, background 0.2s',
             }}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
               stroke="white" strokeWidth="2.5" strokeLinecap="round">
               <path d="M15 18l-6-6 6-6" />
             </svg>
@@ -224,15 +226,16 @@ export default function GallerySection() {
               position: 'absolute',
               right: 0, top: '50%', transform: 'translateY(-50%)',
               zIndex: 20,
-              width: 44, height: 44, borderRadius: '50%',
-              background: 'rgba(184,115,51,0.80)',
-              border: '2px solid rgba(184,115,51,0.5)',
+              width: 48, height: 48, borderRadius: '50%',
+              background: 'rgba(212, 180, 131, 0.85)',
+              border: '1px solid rgba(255, 255, 255, 0.4)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               cursor: 'pointer',
-              boxShadow: '0 2px 12px rgba(0,0,0,0.12)',
+              boxShadow: '0 4px 16px rgba(94, 74, 66, 0.25)',
+              transition: 'transform 0.2s, background 0.2s',
             }}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
               stroke="white" strokeWidth="2.5" strokeLinecap="round">
               <path d="M9 18l6-6-6-6" />
             </svg>

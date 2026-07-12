@@ -14,76 +14,77 @@
    ============================================ */
 :root {
   /* ── Base (Ivory & Pearl) ── */
-  --color-bg: #FFFFF0;
+  --color-bg: #FAF6EE;
   /* Soft Ivory */
-  --color-bg-alt: #F8F6F0;
+  --color-bg-alt: #FFFDF8;
   /* Pearl White */
-  --color-card: rgba(248, 246, 240, 0.90);
-  --color-card-solid: #F8F6F0;
+  --color-card: rgba(255, 253, 248, 0.85);
+  --color-card-solid: #FFFDF8;
 
   /* ── Deep Plum Text (editorial) ── */
-  --color-text: #6B4C7A;
-  --color-text-secondary: rgba(107, 76, 122, 0.85);
-  --color-text-muted: rgba(107, 76, 122, 0.65);
+  --color-text: #5E4A42; /* Dark Text */
+  --color-text-purple: #6B4C7A;
+  --color-text-secondary: rgba(94, 74, 66, 0.85);
+  --color-text-muted: rgba(94, 74, 66, 0.65);
 
-  /* ── Dusty Rose — soft accents, frames, badges ── */
-  --color-pink: #D8A7B1;
-  --color-pink-light: rgba(216, 167, 177, 0.2);
-  --color-pink-deep: #c48c97;
-  --color-pink-bg: rgba(216, 167, 177, 0.12);
+  /* ── Dusty Rose / Purple accents ── */
+  --color-pink: #8A6A99; /* Secondary Purple */
+  --color-pink-light: rgba(138, 106, 153, 0.15);
+  --color-pink-deep: #6B4C7A;
+  --color-pink-bg: rgba(138, 106, 153, 0.08);
 
   /* ── Metallic Copper-Gold — borders, luxury details ── */
-  --color-accent: #B87333;
-  --color-accent-light: rgba(184, 115, 51, 0.12);
-  --color-accent-glow: rgba(184, 115, 51, 0.25);
+  --color-accent: #D4B483; /* Luxury Gold */
+  --color-accent-light: rgba(212, 180, 131, 0.15);
+  --color-accent-glow: rgba(212, 180, 131, 0.25);
 
-  /* ── Deep Plum / Copper (Replacing Sage variables) ── */
+  /* ── Deep Plum / Copper ── */
   --color-sage: #6B4C7A;
   --color-sage-deep: #4e3659;
   --color-sage-light: rgba(107, 76, 122, 0.10);
 
   /* ── Gold shimmer (warm copper tint) ── */
-  --color-gold: #B87333;
-  --color-gold-shimmer: rgba(184, 115, 51, 0.20);
+  --color-gold: #D4B483;
+  --color-gold-shimmer: rgba(212, 180, 131, 0.25);
 
   /* ── Petals (rose/plum tones) ── */
-  --color-petal: rgba(216, 167, 177, 0.45);
-  --color-floral-1: #F8F6F0;
-  --color-floral-2: #D8A7B1;
-  --color-floral-3: #B87333;
+  --color-petal: rgba(212, 180, 131, 0.45);
+  --color-floral-1: #FAF6EE;
+  --color-floral-2: #E9D7B5;
+  --color-floral-3: #D4B483;
   --color-floral-4: #6B4C7A;
 
   /* ── Dividers / glass ── */
-  --color-divider: rgba(107, 76, 122, 0.18);
-  --color-glass-border: rgba(107, 76, 122, 0.14);
-  --color-input-border: rgba(107, 76, 122, 0.28);
+  --color-divider: rgba(212, 180, 131, 0.35);
+  --color-glass-border: rgba(212, 180, 131, 0.20);
+  --color-input-border: rgba(212, 180, 131, 0.40);
 
   /* ── Shadows ── */
-  --color-shadow: rgba(107, 76, 122, 0.08);
-  --color-shadow-strong: rgba(107, 76, 122, 0.16);
+  --color-shadow: rgba(94, 74, 66, 0.05);
+  --color-shadow-strong: rgba(94, 74, 66, 0.12);
 
   /* ── Envelope (Dusty Rose) ── */
-  --color-envelope: #D8A7B1;
-  --color-envelope-flap: #c48c97;
-  --color-envelope-inner: #FFFFF0;
-  --color-seal: #B87333;
-  --color-seal-highlight: #c7894a;
-  --color-seal-text: #FFFFF0;
+  --color-envelope: #FAF6EE;
+  --color-envelope-flap: #FFFDF8;
+  --color-envelope-inner: #E9D7B5;
+  --color-seal: #D4B483;
+  --color-seal-highlight: #E9D7B5;
+  --color-seal-text: #5E4A42;
 
   /* ── Misc ── */
-  --color-overlay: rgba(255, 255, 240, 0.94);
-  --color-watercolor: rgba(216, 167, 177, 0.06);
+  --color-overlay: rgba(250, 246, 238, 0.94);
+  --color-watercolor: rgba(212, 180, 131, 0.08);
 
   /* ── Fonts ── */
   --font-script: 'Great Vibes', cursive;
   --font-serif: 'Cormorant Garamond', serif;
   --font-display: 'Playfair Display', serif;
-  --font-body: 'Montserrat', sans-serif;
+  --font-body: 'Poppins', sans-serif;
 
   /* ── Spacing ── */
-  --section-py: 100px;
-  --section-py-mobile: 60px;
-  --card-gap: 28px;
+  --section-py: 120px;
+  --section-py-mobile: 80px;
+  --card-gap: 32px;
 }
 
 /* ============================================
@@ -107,7 +108,8 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   overflow-x: hidden;
-  line-height: 1.6;
+  line-height: 1.8;
+  letter-spacing: 0.03em;
 }
 
 /* Pink + warm scrollbar */
@@ -129,10 +131,12 @@ body {
    ============================================ */
 .font-script {
   font-family: var(--font-script);
+  letter-spacing: 0.02em;
 }
 
 .font-serif {
   font-family: var(--font-serif);
+  letter-spacing: 0.05em;
 }
 
 .font-display {
@@ -154,9 +158,9 @@ body {
 .heading-editorial {
   font-family: var(--font-display);
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-text);
+  color: var(--color-text-purple);
 }
 
 /* ============================================
@@ -418,60 +422,18 @@ body {
   }
 }
 
-/* ── Cinematic Transition Keyframes ── */
-@keyframes portalVortexPull {
-  0% {
-    transform: scale(1) rotate(0deg);
-    filter: blur(0px);
-    opacity: 1;
-  }
 
-  40% {
-    transform: scale(0.95) rotate(-2deg);
-    filter: blur(1px);
-    opacity: 0.9;
-  }
-
-  100% {
-    transform: scale(0) rotate(45deg);
-    filter: blur(10px);
-    opacity: 0;
-  }
-}
-
-@keyframes portalBackgroundZoom {
-  0% {
-    transform: scale(1);
-    filter: brightness(1) blur(0px);
-  }
-
-  100% {
-    transform: scale(1.15);
-    filter: brightness(1.2) blur(8px);
-  }
-}
-
-@keyframes radialDistortion {
-  0% {
-    box-shadow: inset 0 0 0 rgba(255, 255, 255, 0);
-    background: rgba(255, 255, 255, 0);
-  }
-
-  100% {
-    box-shadow: inset 0 0 150px rgba(255, 255, 240, 0.9);
-    background: rgba(255, 255, 240, 0.7);
-  }
-}
 
 /* ============================================
    UTILITY CLASSES
    ============================================ */
 .glass-card {
   background: var(--color-card);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--color-glass-border);
-  box-shadow: 0 4px 30px var(--color-shadow), 0 1px 2px var(--color-shadow);
+  box-shadow: 0 8px 32px var(--color-shadow), 0 2px 4px var(--color-shadow);
+  border-radius: 32px;
 }
 
 .bg-shimmer {
