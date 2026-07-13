@@ -24,8 +24,10 @@ export default function LoadingScreen({ phase, onOpen }) {
         >
           {/* ── Background Image (Darkens and scales on transition) ── */}
           <div className="absolute inset-0 bg-black">
-            <motion.div
-              className="absolute inset-0 w-full h-full bg-hero-responsive"
+            <motion.img
+              src="/cover photo.png"
+              alt="Background"
+              className="absolute inset-0 w-full h-full hero-photo"
               initial={{ scale: 1, filter: 'brightness(1) blur(0px)' }}
               animate={phase === 'transition' ? { scale: 1.08, filter: 'brightness(0.4) blur(6px)' } : { scale: 1, filter: 'brightness(1) blur(0px)' }}
               transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
@@ -221,31 +223,89 @@ export default function LoadingScreen({ phase, onOpen }) {
 
 function CircularFrame({ brideName, groomName }) {
   const size = 'clamp(300px, 80vw, 450px)';
+  
+  // Helpers to generate leaves
+  const getLeafColor = (i) => ['#8C9A86', '#A1B199', '#7A8B76'][i % 3];
+  
   return (
     <div style={{ position: 'relative', width: size, height: size }}>
       <motion.svg
         viewBox="0 0 400 400"
         style={{
           width: '100%', height: '100%', display: 'block',
-          filter: 'drop-shadow(0 4px 16px rgba(0,0,0,0.3))',
+          filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.25))',
         }}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         animate={{ scale: [1, 1.015, 1] }}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
       >
-        {/* Outer elegant thin ring */}
-        <circle cx="200" cy="200" r="185" stroke="rgba(255,255,255,0.85)" strokeWidth="0.5" />
-        
-        {/* Inner subtle dashed ring for depth */}
-        <circle cx="200" cy="200" r="172" stroke="rgba(255,255,255,0.4)" strokeWidth="0.5" strokeDasharray="6 8" />
+        {/* Main branch paths */}
+        <path d="M 200 380 C 70 380, 20 250, 60 90" fill="none" stroke="#7A8B76" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
+        <path d="M 200 380 C 330 380, 380 250, 340 90" fill="none" stroke="#7A8B76" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
 
-        {/* Top elegant monogram anchor */}
-        <circle cx="200" cy="15" r="12" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.5)" strokeWidth="0.5" />
-        <text x="200" y="19" fill="rgba(255,255,255,0.9)" fontSize="10" fontFamily="var(--font-serif)" textAnchor="middle" letterSpacing="1">N&amp;S</text>
-        
-        {/* Bottom subtle anchor dot */}
-        <circle cx="200" cy="385" r="3" fill="rgba(255,255,255,0.5)" />
+        {/* Left branch pointed leaves */}
+        {[...Array(12)].map((_, i) => {
+          const progress = i / 11;
+          const angle = 90 + progress * 130; 
+          const rad = angle * (Math.PI / 180);
+          const cx = 200 + 175 * Math.cos(rad);
+          const cy = 190 + 185 * Math.sin(rad);
+          const isOut = i % 2 === 0;
+          const leafAngle = angle + (isOut ? 45 : -25);
+          return (
+            <path key={`ll-${i}`} d="M 0 0 C 12 -12, 24 -8, 28 0 C 24 8, 12 12, 0 0 Z" fill={getLeafColor(i)} transform={`translate(${cx},${cy}) rotate(${leafAngle}) scale(${0.65 + (1-progress)*0.4})`} />
+          );
+        })}
+
+        {/* Right branch pointed leaves */}
+        {[...Array(12)].map((_, i) => {
+          const progress = i / 11;
+          const angle = 90 - progress * 130; 
+          const rad = angle * (Math.PI / 180);
+          const cx = 200 + 175 * Math.cos(rad);
+          const cy = 190 + 185 * Math.sin(rad);
+          const isOut = i % 2 === 0;
+          const leafAngle = angle + (isOut ? -45 : 25);
+          return (
+            <path key={`rl-${i}`} d="M 0 0 C 12 -12, 24 -8, 28 0 C 24 8, 12 12, 0 0 Z" fill={getLeafColor(i+1)} transform={`translate(${cx},${cy}) rotate(${leafAngle}) scale(${0.65 + (1-progress)*0.4})`} />
+          );
+        })}
+
+        {/* Left eucalyptus round leaves */}
+        {[...Array(8)].map((_, i) => {
+          const progress = i / 7;
+          const angle = 90 + progress * 140; 
+          const rad = angle * (Math.PI / 180);
+          const cx = 200 + 175 * Math.cos(rad);
+          const cy = 190 + 185 * Math.sin(rad);
+          return <circle key={`el-${i}`} cx={cx} cy={cy} r="10" fill="#A1B199" transform={`translate(${Math.cos(rad)*14}, ${Math.sin(rad)*14})`} opacity="0.85" />;
+        })}
+
+        {/* Right eucalyptus round leaves */}
+        {[...Array(8)].map((_, i) => {
+          const progress = i / 7;
+          const angle = 90 - progress * 140; 
+          const rad = angle * (Math.PI / 180);
+          const cx = 200 + 175 * Math.cos(rad);
+          const cy = 190 + 185 * Math.sin(rad);
+          return <circle key={`er-${i}`} cx={cx} cy={cy} r="10" fill="#A1B199" transform={`translate(${Math.cos(rad)*14}, ${Math.sin(rad)*14})`} opacity="0.85" />;
+        })}
+
+        {/* White delicate flowers at bottom center */}
+        {[80, 90, 100].map((angle, i) => {
+          const rad = angle * (Math.PI / 180);
+          const cx = 200 + 175 * Math.cos(rad);
+          const cy = 190 + 185 * Math.sin(rad);
+          return (
+            <g key={`flower-${i}`} transform={`translate(${cx},${cy}) scale(1.2)`}>
+              <path d="M 0 0 C 6 -12, 12 -12, 0 0 Z" fill="#F9F8F6" />
+              <path d="M 0 0 C -12 -6, -12 6, 0 0 Z" fill="#F9F8F6" />
+              <path d="M 0 0 C 6 12, 12 6, 0 0 Z" fill="#F9F8F6" />
+              <circle cx="2" cy="0" r="2.5" fill="#D4B483" />
+            </g>
+          );
+        })}
       </motion.svg>
 
       {/* Couple names perfectly centered */}
