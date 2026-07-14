@@ -95,6 +95,7 @@ export default function LoadingScreen({ phase, onOpen }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 1, ease: [0.22, 0.61, 0.36, 1] }}
             >
+              {/* 
               {GUEST_NAME && (
                 <p
                   className="font-body mb-2"
@@ -108,6 +109,7 @@ export default function LoadingScreen({ phase, onOpen }) {
                   Hello, {GUEST_NAME}
                 </p>
               )}
+              */}
               <p
                 className="font-body"
                 style={{
@@ -269,7 +271,7 @@ function CircularFrame({ brideName, groomName }) {
   }
 
   return (
-    <div style={{ position: 'relative', width: size, height: size }}>
+    <div style={{ position: 'relative', width: size, height: size, margin: '0 auto' }}>
       <motion.svg
         viewBox="0 0 400 400"
         style={{
@@ -391,7 +393,7 @@ function CircularFrame({ brideName, groomName }) {
       {/* Couple names perfectly centered */}
       <div
         className="absolute inset-0 flex flex-col items-center justify-center"
-        style={{ padding: '15%' }}
+        style={{ padding: '0', width: '100%', height: '100%' }}
       >
         <motion.h1
           className="font-script text-center"
