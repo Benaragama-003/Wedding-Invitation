@@ -47,10 +47,10 @@ export default function LoadingScreen({ phase, onOpen }) {
             />
           </div>
 
-          {/* ── Golden converging point (only during transition) ── */}
+          {/* ── Sage Green converging point (only during transition) ── */}
           <motion.div
             className="absolute top-1/2 left-1/2 rounded-full pointer-events-none"
-            style={{ width: 6, height: 6, background: '#E9D7B5', boxShadow: '0 0 24px 8px rgba(212,180,131,0.6)', x: '-50%', y: '-50%', zIndex: 50 }}
+            style={{ width: 6, height: 6, background: '#A1B199', boxShadow: '0 0 24px 8px rgba(161,177,153,0.6)', x: '-50%', y: '-50%', zIndex: 50 }}
             initial={{ scale: 0, opacity: 0 }}
             animate={phase === 'transition' ? { scale: [0, 2, 0], opacity: [0, 1, 0] } : { scale: 0, opacity: 0 }}
             transition={{ duration: 1.4, times: [0, 0.8, 1], ease: 'easeInOut' }}
@@ -70,8 +70,8 @@ export default function LoadingScreen({ phase, onOpen }) {
                     className="absolute top-1/2 left-1/2 rounded-full"
                     style={{
                       width: 2.5, height: 2.5,
-                      background: '#E9D7B5',
-                      boxShadow: '0 0 6px rgba(212,180,131,0.8)',
+                      background: '#A1B199',
+                      boxShadow: '0 0 6px rgba(161,177,153,0.8)',
                     }}
                     initial={{ x: `calc(-50% + ${tx}px)`, y: `calc(-50% + ${ty}px)`, opacity: 0, scale: 0 }}
                     animate={{ x: '-50%', y: '-50%', opacity: [0, 0.8, 0], scale: [0, 1.2, 0] }}
@@ -82,18 +82,15 @@ export default function LoadingScreen({ phase, onOpen }) {
             </div>
           )}
 
-          {/* ── Main Content (Pulls inward to black hole) ── */}
-          <motion.div
+          {/* ── Main Content ── */}
+          <div
             className="relative flex-1 flex flex-col items-center justify-center w-full px-4"
-            initial={{ scale: 1, filter: 'blur(0px)', opacity: 1 }}
-            animate={phase === 'transition' ? { scale: 0, filter: 'blur(12px)', opacity: [1, 0.8, 0] } : { scale: 1, filter: 'blur(0px)', opacity: 1 }}
-            transition={{ duration: 1.4, ease: [0.34, 0.05, 0.36, 1] }} // smooth, non-aggressive pull
           >
             <motion.div
               className="text-center mb-4 mt-12"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 1, ease: [0.22, 0.61, 0.36, 1] }}
+              initial={{ opacity: 0, y: -20, scale: 1, filter: 'blur(0px)' }}
+              animate={phase === 'transition' ? { scale: 0, filter: 'blur(12px)', opacity: 0 } : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+              transition={phase === 'transition' ? { duration: 1.4, ease: [0.34, 0.05, 0.36, 1] } : { delay: 0.4, duration: 1, ease: [0.22, 0.61, 0.36, 1] }}
             >
               {/* 
               {GUEST_NAME && (
@@ -131,9 +128,9 @@ export default function LoadingScreen({ phase, onOpen }) {
               transition={{ delay: 0.2, duration: 1.2, ease: [0.22, 0.61, 0.36, 1] }}
               style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center' }}
             >
-              <CircularFrame brideName={BRIDE_NAME} groomName={GROOM_NAME} />
+              <CircularFrame brideName={BRIDE_NAME} groomName={GROOM_NAME} phase={phase} />
             </motion.div>
-          </motion.div>
+          </div>
 
           {/* ── Bottom Button (Fades out) ── */}
           <div
@@ -223,7 +220,7 @@ export default function LoadingScreen({ phase, onOpen }) {
   );
 }
 
-function CircularFrame({ brideName, groomName }) {
+function CircularFrame({ brideName, groomName, phase }) {
   const size = 'clamp(300px, 80vw, 450px)';
 
   // Silver palette
@@ -272,6 +269,7 @@ function CircularFrame({ brideName, groomName }) {
 
   return (
     <div style={{ position: 'relative', width: size, height: size, margin: '0 auto' }}>
+      {/* Silver SVG Foliage - Dissolves to dust */}
       <motion.svg
         viewBox="0 0 400 400"
         style={{
@@ -280,8 +278,16 @@ function CircularFrame({ brideName, groomName }) {
         }}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        animate={{ scale: [1, 1.015, 1] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        animate={
+          phase === 'transition' 
+            ? { scale: 1.15, filter: 'blur(8px)', opacity: 0 } 
+            : { scale: [1, 1.015, 1], filter: 'blur(0px)', opacity: 1 }
+        }
+        transition={
+          phase === 'transition'
+            ? { duration: 1.2, ease: 'easeOut' }
+            : { duration: 8, repeat: Infinity, ease: 'easeInOut' }
+        }
       >
         {/* Main branch stems */}
         <path
@@ -390,7 +396,40 @@ function CircularFrame({ brideName, groomName }) {
         })}
       </motion.svg>
 
-      {/* Couple names perfectly centered */}
+      {/* Bursting Dust Particles (Triggers during transition) */}
+      {phase === 'transition' && (
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(35)].map((_, i) => {
+            const angle = Math.random() * Math.PI * 2;
+            const dist = 60 + Math.random() * 180; // scatter distance
+            const tx = Math.cos(angle) * dist;
+            const ty = Math.sin(angle) * dist;
+            const size = 1 + Math.random() * 2.5;
+            const colors = ['#C8C8C0', '#A8A8A0', '#D0D0C8', '#A1B199'];
+            return (
+              <motion.div
+                key={`dust-${i}`}
+                className="absolute top-1/2 left-1/2 rounded-full"
+                style={{ 
+                  width: size, height: size, 
+                  background: colors[i % colors.length],
+                  boxShadow: `0 0 4px ${colors[i % colors.length]}88`,
+                  x: '-50%', y: '-50%' 
+                }}
+                animate={{
+                  x: `calc(-50% + ${tx}px)`,
+                  y: `calc(-50% + ${ty}px)`,
+                  opacity: [0, 1, 0],
+                  scale: [0, 1.5, 0],
+                }}
+                transition={{ duration: 1 + Math.random() * 0.4, ease: 'easeOut' }}
+              />
+            );
+          })}
+        </div>
+      )}
+
+      {/* Couple names perfectly centered (Pulls inward to black hole) */}
       <div
         className="absolute inset-0 flex flex-col items-center justify-center"
         style={{ padding: '0', width: '100%', height: '100%' }}
@@ -401,10 +440,20 @@ function CircularFrame({ brideName, groomName }) {
             color: '#FFFFFF',
             lineHeight: 1.1,
             textShadow: '0 4px 16px rgba(0,0,0,0.6)',
+            width: 'max-content',
+            maxWidth: '100vw',
           }}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 1 }}
+          initial={{ opacity: 0, y: 10, scale: 1, filter: 'blur(0px)' }}
+          animate={
+            phase === 'transition' 
+              ? { scale: 0, filter: 'blur(12px)', opacity: 0 } 
+              : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
+          }
+          transition={
+            phase === 'transition' 
+              ? { duration: 1.4, ease: [0.34, 0.05, 0.36, 1] } 
+              : { delay: 0.6, duration: 1 }
+          }
         >
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
             <span style={{ fontSize: 'clamp(3.5rem, 12vw, 6rem)' }}>{groomName}</span>
