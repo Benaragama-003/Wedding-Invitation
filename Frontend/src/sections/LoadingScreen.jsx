@@ -269,6 +269,13 @@ function CircularFrame({ brideName, groomName, phase }) {
 
   return (
     <div style={{ position: 'relative', width: size, height: size, margin: '0 auto' }}>
+      <style>{`
+        @media (max-width: 430px) {
+          .mobile-optical-fix {
+            transform: translateX(clamp(10px, 3.5vw, 16px));
+          }
+        }
+      `}</style>
       {/* Silver SVG Foliage - Dissolves to dust */}
       <motion.svg
         viewBox="0 0 400 400"
@@ -431,7 +438,7 @@ function CircularFrame({ brideName, groomName, phase }) {
 
       {/* Couple names perfectly centered (Pulls inward to black hole) */}
       <div
-        className="absolute inset-0 flex flex-col items-center justify-center"
+        className="absolute inset-0 flex flex-col items-center justify-center mobile-optical-fix"
         style={{ padding: '0', width: '100%', height: '100%' }}
       >
         <motion.h1
