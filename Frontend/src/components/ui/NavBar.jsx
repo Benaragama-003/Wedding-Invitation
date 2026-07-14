@@ -14,16 +14,20 @@ const NAV_LEFT = [
   { label: 'Timeline', href: '#timeline' },
 ];
 const NAV_RIGHT = [
-  { label: 'Venue', href: '#location' },
+  { label: 'Venue', href: 'https://maps.app.goo.gl/YuFFRrASWDusw7eC6', external: true },
   { label: 'Gallery', href: '#gallery' },
 ];
 
 export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const scrollTo = (href) => {
+  const scrollTo = (item) => {
     setMenuOpen(false);
-    const el = document.querySelector(href);
+    if (item.external) {
+      window.open(item.href, '_blank', 'noopener,noreferrer');
+      return;
+    }
+    const el = document.querySelector(item.href);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
@@ -60,13 +64,13 @@ export default function NavBar() {
               {/* ── Left nav links (desktop) ── */}
               <div className="hidden md:flex items-center gap-8" style={{ flex: 1 }}>
                 {NAV_LEFT.map((item) => (
-                  <NavLink key={item.href} item={item} onClick={() => scrollTo(item.href)} />
+                  <NavLink key={item.href} item={item} onClick={() => scrollTo(item)} />
                 ))}
               </div>
 
               {/* ── Center monogram ── */}
               <button
-                onClick={() => scrollTo('#hero')}
+                onClick={() => scrollTo({ href: '#hero' })}
                 className="font-serif font-semibold cursor-pointer"
                 style={{
                   color: 'rgba(255,255,255,0.92)',
@@ -88,7 +92,7 @@ export default function NavBar() {
               {/* ── Right nav links (desktop) ── */}
               <div className="hidden md:flex items-center gap-8 justify-end" style={{ flex: 1 }}>
                 {NAV_RIGHT.map((item) => (
-                  <NavLink key={item.href} item={item} onClick={() => scrollTo(item.href)} />
+                  <NavLink key={item.href} item={item} onClick={() => scrollTo(item)} />
                 ))}
               </div>
 
@@ -152,7 +156,7 @@ export default function NavBar() {
                   {[...NAV_LEFT, ...NAV_RIGHT].map((item) => (
                     <button
                       key={item.href}
-                      onClick={() => scrollTo(item.href)}
+                      onClick={() => scrollTo(item)}
                       style={{
                         background: 'none',
                         border: 'none',

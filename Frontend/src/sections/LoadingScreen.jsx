@@ -223,10 +223,51 @@ export default function LoadingScreen({ phase, onOpen }) {
 
 function CircularFrame({ brideName, groomName }) {
   const size = 'clamp(300px, 80vw, 450px)';
-  
-  // Helpers to generate leaves
-  const getLeafColor = (i) => ['#8C9A86', '#A1B199', '#7A8B76'][i % 3];
-  
+
+  // Silver palette
+  const branchColor = '#B8B8B0';      // warm silver for branches
+  const leafLight  = '#C8C8C0';       // light silver leaf
+  const leafMid    = '#A8A8A0';       // mid silver leaf
+  const leafDark   = '#989890';       // darker silver leaf
+  const flowerPetal = '#D0D0C8';      // silver-white petals
+  const flowerCenter = '#C0B8A8';     // warm champagne center
+
+  // Generate leaf along a bezier path
+  // Left branch: starts at bottom-center, curves up-left to top
+  // Right branch: starts at bottom-center, curves up-right to top
+  const leftBranchLeaves = [];
+  const rightBranchLeaves = [];
+
+  for (let i = 0; i < 16; i++) {
+    const t = i / 15;
+    // Left branch path: cubic bezier from (200,375) to (60,50)
+    const lx = (1-t)**3*200 + 3*(1-t)**2*t*100 + 3*(1-t)*t**2*40 + t**3*80;
+    const ly = (1-t)**3*375 + 3*(1-t)**2*t*320 + 3*(1-t)*t**2*180 + t**3*45;
+    // Tangent angle for leaf direction
+    const dlx = -3*(1-t)**2*200 + 3*(3*(1-t)**2 - 6*(1-t)*t)*100/3*3 + 3*(6*(1-t)*t - 3*t**2)*40/3*3 + 3*t**2*80;
+    const dly = -3*(1-t)**2*375 + 3*(1-t)**2*320 + (6*(1-t)*t - 3*t**2)*180*3 + 3*t**2*45;
+    const angle = Math.atan2(dly, dlx) * 180 / Math.PI;
+    const side = i % 2 === 0 ? -1 : 1;
+    const leafScale = 0.6 + (1-t) * 0.5;
+    const colors = [leafLight, leafMid, leafDark];
+
+    leftBranchLeaves.push({
+      x: lx + side * 8, y: ly + side * 4,
+      angle: angle + side * 55,
+      scale: leafScale,
+      color: colors[i % 3],
+    });
+
+    // Right branch (mirrored)
+    const rx = 400 - lx;
+    rightBranchLeaves.push({
+      x: rx - side * 8, y: ly + side * 4,
+      angle: 180 - angle - side * 55,
+      scale: leafScale,
+      color: colors[(i+1) % 3],
+    });
+  }
+
   return (
     <div style={{ position: 'relative', width: size, height: size }}>
       <motion.svg
@@ -240,69 +281,108 @@ function CircularFrame({ brideName, groomName }) {
         animate={{ scale: [1, 1.015, 1] }}
         transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
       >
-        {/* Main branch paths */}
-        <path d="M 200 380 C 70 380, 20 250, 60 90" fill="none" stroke="#7A8B76" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
-        <path d="M 200 380 C 330 380, 380 250, 340 90" fill="none" stroke="#7A8B76" strokeWidth="1.5" strokeLinecap="round" opacity="0.8" />
+        {/* Main branch stems */}
+        <path
+          d="M 200 375 C 100 320, 40 180, 80 45"
+          fill="none" stroke={branchColor} strokeWidth="1.2" strokeLinecap="round" opacity="0.9"
+        />
+        <path
+          d="M 200 375 C 300 320, 360 180, 320 45"
+          fill="none" stroke={branchColor} strokeWidth="1.2" strokeLinecap="round" opacity="0.9"
+        />
 
-        {/* Left branch pointed leaves */}
-        {[...Array(12)].map((_, i) => {
-          const progress = i / 11;
-          const angle = 90 + progress * 130; 
-          const rad = angle * (Math.PI / 180);
-          const cx = 200 + 175 * Math.cos(rad);
-          const cy = 190 + 185 * Math.sin(rad);
-          const isOut = i % 2 === 0;
-          const leafAngle = angle + (isOut ? 45 : -25);
+        {/* Secondary thinner branches */}
+        <path
+          d="M 180 370 C 85 310, 30 190, 75 55"
+          fill="none" stroke={branchColor} strokeWidth="0.6" strokeLinecap="round" opacity="0.5"
+        />
+        <path
+          d="M 220 370 C 315 310, 370 190, 325 55"
+          fill="none" stroke={branchColor} strokeWidth="0.6" strokeLinecap="round" opacity="0.5"
+        />
+
+        {/* Left branch leaves */}
+        {leftBranchLeaves.map((leaf, i) => (
+          <path
+            key={`ll-${i}`}
+            d="M 0 0 C 4 -8, 14 -8, 18 -2 C 14 4, 4 6, 0 0 Z"
+            fill={leaf.color}
+            opacity="0.85"
+            transform={`translate(${leaf.x},${leaf.y}) rotate(${leaf.angle}) scale(${leaf.scale})`}
+          />
+        ))}
+
+        {/* Right branch leaves */}
+        {rightBranchLeaves.map((leaf, i) => (
+          <path
+            key={`rl-${i}`}
+            d="M 0 0 C 4 -8, 14 -8, 18 -2 C 14 4, 4 6, 0 0 Z"
+            fill={leaf.color}
+            opacity="0.85"
+            transform={`translate(${leaf.x},${leaf.y}) rotate(${leaf.angle}) scale(${leaf.scale})`}
+          />
+        ))}
+
+        {/* Small berry/bud accents along left branch */}
+        {[0.15, 0.35, 0.55, 0.75].map((t, i) => {
+          const x = (1-t)**3*200 + 3*(1-t)**2*t*100 + 3*(1-t)*t**2*40 + t**3*80;
+          const y = (1-t)**3*375 + 3*(1-t)**2*t*320 + 3*(1-t)*t**2*180 + t**3*45;
+          const side = i % 2 === 0 ? -1 : 1;
           return (
-            <path key={`ll-${i}`} d="M 0 0 C 12 -12, 24 -8, 28 0 C 24 8, 12 12, 0 0 Z" fill={getLeafColor(i)} transform={`translate(${cx},${cy}) rotate(${leafAngle}) scale(${0.65 + (1-progress)*0.4})`} />
+            <g key={`lb-${i}`}>
+              <line x1={x} y1={y} x2={x + side*14} y2={y - 10} stroke={branchColor} strokeWidth="0.5" opacity="0.6" />
+              <circle cx={x + side*14} cy={y - 10} r="2" fill={leafMid} opacity="0.7" />
+              <line x1={x} y1={y} x2={x + side*10} y2={y - 16} stroke={branchColor} strokeWidth="0.5" opacity="0.6" />
+              <circle cx={x + side*10} cy={y - 16} r="1.5" fill={leafLight} opacity="0.6" />
+            </g>
           );
         })}
 
-        {/* Right branch pointed leaves */}
-        {[...Array(12)].map((_, i) => {
-          const progress = i / 11;
-          const angle = 90 - progress * 130; 
-          const rad = angle * (Math.PI / 180);
-          const cx = 200 + 175 * Math.cos(rad);
-          const cy = 190 + 185 * Math.sin(rad);
-          const isOut = i % 2 === 0;
-          const leafAngle = angle + (isOut ? -45 : 25);
+        {/* Small berry/bud accents along right branch */}
+        {[0.15, 0.35, 0.55, 0.75].map((t, i) => {
+          const x = 400 - ((1-t)**3*200 + 3*(1-t)**2*t*100 + 3*(1-t)*t**2*40 + t**3*80);
+          const y = (1-t)**3*375 + 3*(1-t)**2*t*320 + 3*(1-t)*t**2*180 + t**3*45;
+          const side = i % 2 === 0 ? 1 : -1;
           return (
-            <path key={`rl-${i}`} d="M 0 0 C 12 -12, 24 -8, 28 0 C 24 8, 12 12, 0 0 Z" fill={getLeafColor(i+1)} transform={`translate(${cx},${cy}) rotate(${leafAngle}) scale(${0.65 + (1-progress)*0.4})`} />
+            <g key={`rb-${i}`}>
+              <line x1={x} y1={y} x2={x + side*14} y2={y - 10} stroke={branchColor} strokeWidth="0.5" opacity="0.6" />
+              <circle cx={x + side*14} cy={y - 10} r="2" fill={leafMid} opacity="0.7" />
+              <line x1={x} y1={y} x2={x + side*10} y2={y - 16} stroke={branchColor} strokeWidth="0.5" opacity="0.6" />
+              <circle cx={x + side*10} cy={y - 16} r="1.5" fill={leafLight} opacity="0.6" />
+            </g>
           );
         })}
 
-        {/* Left eucalyptus round leaves */}
-        {[...Array(8)].map((_, i) => {
-          const progress = i / 7;
-          const angle = 90 + progress * 140; 
-          const rad = angle * (Math.PI / 180);
-          const cx = 200 + 175 * Math.cos(rad);
-          const cy = 190 + 185 * Math.sin(rad);
-          return <circle key={`el-${i}`} cx={cx} cy={cy} r="10" fill="#A1B199" transform={`translate(${Math.cos(rad)*14}, ${Math.sin(rad)*14})`} opacity="0.85" />;
-        })}
-
-        {/* Right eucalyptus round leaves */}
-        {[...Array(8)].map((_, i) => {
-          const progress = i / 7;
-          const angle = 90 - progress * 140; 
-          const rad = angle * (Math.PI / 180);
-          const cx = 200 + 175 * Math.cos(rad);
-          const cy = 190 + 185 * Math.sin(rad);
-          return <circle key={`er-${i}`} cx={cx} cy={cy} r="10" fill="#A1B199" transform={`translate(${Math.cos(rad)*14}, ${Math.sin(rad)*14})`} opacity="0.85" />;
-        })}
-
-        {/* White delicate flowers at bottom center */}
-        {[80, 90, 100].map((angle, i) => {
-          const rad = angle * (Math.PI / 180);
-          const cx = 200 + 175 * Math.cos(rad);
-          const cy = 190 + 185 * Math.sin(rad);
+        {/* Rosette flowers — left side */}
+        {[0.25, 0.5, 0.72].map((t, i) => {
+          const x = (1-t)**3*200 + 3*(1-t)**2*t*100 + 3*(1-t)*t**2*40 + t**3*80;
+          const y = (1-t)**3*375 + 3*(1-t)**2*t*320 + 3*(1-t)*t**2*180 + t**3*45;
+          const side = i % 2 === 0 ? -1 : 1;
+          const fx = x + side * 18;
+          const fy = y - 4;
           return (
-            <g key={`flower-${i}`} transform={`translate(${cx},${cy}) scale(1.2)`}>
-              <path d="M 0 0 C 6 -12, 12 -12, 0 0 Z" fill="#F9F8F6" />
-              <path d="M 0 0 C -12 -6, -12 6, 0 0 Z" fill="#F9F8F6" />
-              <path d="M 0 0 C 6 12, 12 6, 0 0 Z" fill="#F9F8F6" />
-              <circle cx="2" cy="0" r="2.5" fill="#D4B483" />
+            <g key={`fl-${i}`} transform={`translate(${fx},${fy}) scale(${0.8 + i*0.15})`}>
+              {[0, 60, 120, 180, 240, 300].map((a) => (
+                <ellipse key={a} cx={Math.cos(a*Math.PI/180)*5} cy={Math.sin(a*Math.PI/180)*5} rx="4" ry="3" fill={flowerPetal} opacity="0.75" transform={`rotate(${a})`} />
+              ))}
+              <circle cx="0" cy="0" r="2.5" fill={flowerCenter} />
+            </g>
+          );
+        })}
+
+        {/* Rosette flowers — right side */}
+        {[0.25, 0.5, 0.72].map((t, i) => {
+          const x = 400 - ((1-t)**3*200 + 3*(1-t)**2*t*100 + 3*(1-t)*t**2*40 + t**3*80);
+          const y = (1-t)**3*375 + 3*(1-t)**2*t*320 + 3*(1-t)*t**2*180 + t**3*45;
+          const side = i % 2 === 0 ? 1 : -1;
+          const fx = x + side * 18;
+          const fy = y - 4;
+          return (
+            <g key={`fr-${i}`} transform={`translate(${fx},${fy}) scale(${0.8 + i*0.15})`}>
+              {[0, 60, 120, 180, 240, 300].map((a) => (
+                <ellipse key={a} cx={Math.cos(a*Math.PI/180)*5} cy={Math.sin(a*Math.PI/180)*5} rx="4" ry="3" fill={flowerPetal} opacity="0.75" transform={`rotate(${a})`} />
+              ))}
+              <circle cx="0" cy="0" r="2.5" fill={flowerCenter} />
             </g>
           );
         })}

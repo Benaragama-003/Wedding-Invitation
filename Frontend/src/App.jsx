@@ -37,7 +37,7 @@ function App() {
     // We wait for it to complete before revealing the main app.
     setTimeout(() => {
       setPhase('main');
-    }, 1500); // 1.5 second cinematic transition duration
+    }, 1400); // match the 1.4s Framer Motion transition exactly
   };
 
   return (
@@ -61,8 +61,7 @@ function App() {
           {/* ── Transparent NavBar (hero-only) ── */}
           <NavBar />
 
-          {/* ── Ambient background layers (over all sections) ── */}
-          <FloatingParticles petalCount={16} wheatCount={0} glowCount={0} dustCount={0} />
+
 
           {/* ── Soft ambient shimmer ── */}
           <motion.div
@@ -88,6 +87,11 @@ function App() {
             <CountdownSection />
           </main>
         </motion.div>
+      )}
+      
+      {/* ── Ambient background layers (over all sections) ── */}
+      {phase === 'main' && (
+        <FloatingParticles petalCount={16} wheatCount={0} glowCount={0} dustCount={0} />
       )}
     </>
   );

@@ -19,7 +19,13 @@ const RESPONSE_OPTIONS = [
   { value: 'Regretfully Decline', label: 'Regretfully Decline' },
 ];
 
-const GUEST_COUNT_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+// Guest type detection helper
+function getGuestType(name) {
+  if (!name || name === 'Our Dear Guest') return 'unknown';
+  if (/family/i.test(name)) return 'family';
+  if (/\s*&\s*/.test(name)) return 'couple';
+  return 'individual';
+}
 
 export default function RSVPSection() {
   const searchParams = new URLSearchParams(window.location.search);
@@ -27,7 +33,9 @@ export default function RSVPSection() {
   const guestName = guestParam ? decodeURIComponent(guestParam) : 'Our Dear Guest';
 
   const [response, setResponse] = useState('');
-  const [guestCount, setGuestCount] = useState(1);
+  const guestType = getGuestType(guestName);
+  const maxGuests = guestType === 'individual' ? 1 : guestType === 'couple' ? 2 : 5;
+  const [guestCount, setGuestCount] = useState(guestType === 'couple' ? 2 : 1);
   const [status, setStatus] = useState('idle'); // 'idle' | 'submitting' | 'success' | 'error'
   const formRef = useRef(null);
 
@@ -313,9 +321,9 @@ export default function RSVPSection() {
                     </select>
                   </div>
 
-                  {/* Number of Guests (only shown if accepting) */}
+                  {/* Number of Guests (only shown if accepting AND not individual) */}
                   <AnimatePresence>
-                    {response === 'Accept with Pleasure' && (
+                    {response === 'Accept with Pleasure' && guestType !== 'individual' && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
@@ -362,7 +370,7 @@ export default function RSVPSection() {
                             boxSizing: 'border-box',
                           }}
                         >
-                          {GUEST_COUNT_OPTIONS.map((n) => (
+                          {Array.from({ length: maxGuests }, (_, i) => i + 1).map((n) => (
                             <option key={n} value={n}>
                               {n} {n === 1 ? 'Guest' : 'Guests'}
                             </option>
