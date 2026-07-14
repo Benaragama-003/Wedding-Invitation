@@ -222,6 +222,32 @@ export default function LoadingScreen({ phase, onOpen }) {
 
 function CircularFrame({ brideName, groomName, phase }) {
   const size = 'clamp(300px, 80vw, 450px)';
+  const svgRef = React.useRef(null);
+  const textRef = React.useRef(null);
+  const [opticalOffset, setOpticalOffset] = React.useState(0);
+
+  React.useEffect(() => {
+    // Measure actual rendered bounding boxes to root-cause and fix alignment
+    if (svgRef.current && textRef.current) {
+      const svgRect = svgRef.current.getBoundingClientRect();
+      const textRect = textRef.current.getBoundingClientRect();
+      
+      // Calculate true centers in viewport coordinates
+      const svgCenter = svgRect.left + (svgRect.width / 2);
+      const textCenter = textRect.left + (textRect.width / 2);
+      
+      // If the flex layout forced an offset due to max-content or constraints,
+      // this difference will exactly correct the text back to the SVG's true center.
+      const diff = svgCenter - textCenter;
+      
+      // Only apply if there's a meaningful sub-pixel/pixel difference on mobile widths
+      if (window.innerWidth <= 430 && Math.abs(diff) > 0.5) {
+        setOpticalOffset(diff);
+      } else {
+        setOpticalOffset(0);
+      }
+    }
+  }, [brideName, groomName, size]);
 
   // Silver palette
   const branchColor = '#B8B8B0';      // warm silver for branches
@@ -268,14 +294,7 @@ function CircularFrame({ brideName, groomName, phase }) {
   }
 
   return (
-    <div style={{ position: 'relative', width: size, height: size, margin: '0 auto' }}>
-      <style>{`
-        @media (max-width: 430px) {
-          .mobile-optical-fix {
-            transform: translateX(clamp(10px, 3.5vw, 16px));
-          }
-        }
-      `}</style>
+    <div style={{ position: 'relative', width: size, height: size, margin: '0 auto' }} ref={svgRef}>
       {/* Silver SVG Foliage - Dissolves to dust */}
       <motion.svg
         viewBox="0 0 400 400"
@@ -438,10 +457,11 @@ function CircularFrame({ brideName, groomName, phase }) {
 
       {/* Couple names perfectly centered (Pulls inward to black hole) */}
       <div
-        className="absolute inset-0 flex flex-col items-center justify-center mobile-optical-fix"
+        className="absolute inset-0 flex flex-col items-center justify-center"
         style={{ padding: '0', width: '100%', height: '100%' }}
       >
         <motion.h1
+          ref={textRef}
           className="font-script text-center"
           style={{
             color: '#FFFFFF',
@@ -449,6 +469,7 @@ function CircularFrame({ brideName, groomName, phase }) {
             textShadow: '0 4px 16px rgba(0,0,0,0.6)',
             width: 'max-content',
             maxWidth: '100vw',
+            transform: `translateX(${opticalOffset}px)`,
           }}
           initial={{ opacity: 0, y: 10, scale: 1, filter: 'blur(0px)' }}
           animate={
