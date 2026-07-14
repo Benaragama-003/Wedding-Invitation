@@ -93,7 +93,7 @@ export default function HeroSection() {
                 textShadow: '0 1px 4px rgba(0,0,0,0.5)',
               }}
             >
-              We invite you to attend our wedding
+              We invite you to attend
             </p>
           </div>
 
