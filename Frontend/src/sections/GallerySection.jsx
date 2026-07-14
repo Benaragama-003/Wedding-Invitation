@@ -9,14 +9,13 @@ const GALLERY_ITEMS = [
   { id: 4, src: '/Gallery/6.jpg', alt: 'Memories together 4' },
   { id: 5, src: '/Gallery/9.jpg', alt: 'Memories together 5' },
   { id: 6, src: '/Gallery/10.jpg', alt: 'Memories together 6' },
-  { id: 7, src: '/Gallery/25.jpg', alt: 'Memories together 7' },
-  { id: 8, src: '/Gallery/11.jpg', alt: 'Memories together 8' },
-  { id: 9, src: '/Gallery/12.jpg', alt: 'Memories together 9' },
-  { id: 10, src: '/Gallery/15.jpg', alt: 'Memories together 10' },
-  { id: 11, src: '/Gallery/16.jpg', alt: 'Memories together 11' },
-  { id: 12, src: '/Gallery/20.jpg', alt: 'Memories together 12' },
-  { id: 13, src: '/Gallery/23.jpg', alt: 'Memories together 13' },
-  { id: 14, src: '/Gallery/1.jpg', alt: 'Memories together 14' },
+  { id: 7, src: '/Gallery/11.jpg', alt: 'Memories together 8' },
+  { id: 8, src: '/Gallery/12.jpg', alt: 'Memories together 9' },
+  { id: 9, src: '/Gallery/15.jpg', alt: 'Memories together 10' },
+  { id: 10, src: '/Gallery/16.jpg', alt: 'Memories together 11' },
+  { id: 11, src: '/Gallery/20.jpg', alt: 'Memories together 12' },
+  { id: 12, src: '/Gallery/23.jpg', alt: 'Memories together 13' },
+  { id: 13, src: '/Gallery/1.jpg', alt: 'Memories together 14' },
 ];
 
 /* Which photo appears in which slot: [-1=left, 0=center, +1=right] */
