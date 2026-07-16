@@ -81,23 +81,24 @@ const TIMELINE_EVENTS = [
     ),
   },
   {
-    time: '12:00 PM',
+    time: '12:30 PM',
     title: 'Wedding Reception',
     description: 'Lunch & entertainment',
     icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="1.5" strokeLinecap="round">
-        <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
-        <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
-        <line x1="6" y1="1" x2="6" y2="4" />
-        <line x1="10" y1="1" x2="10" y2="4" />
-        <line x1="14" y1="1" x2="14" y2="4" />
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M8 22h8" />
+        <path d="M12 11v11" />
+        <path d="M19.5 8c0 3-3.36 5.5-7.5 5.5S4.5 11 4.5 8" />
+        <path d="M4.5 8l1-6h13l1 6" />
+        <path d="M9 2l1.5 3" />
+        <path d="M15 2l-1.5 3" />
       </svg>
     ),
   },
   {
     time: '03:17 PM',
-    title: "Departing from Hotel Kashyapa",
-    description: 'With the blessings of our parents and elders',
+    title: "Grand exit",
+    description: 'Departure of the newlyweds',
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="1.5" strokeLinecap="round">
         <path d="M12 2L14.5 8.5L21 11L14.5 13.5L12 20L9.5 13.5L3 11L9.5 8.5L12 2Z" />
