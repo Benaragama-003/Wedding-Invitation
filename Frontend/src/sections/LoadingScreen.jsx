@@ -244,8 +244,8 @@ function CircularFrame({ brideName, groomName, phase }) {
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         animate={
-          phase === 'transition' 
-            ? { scale: 1.15, filter: 'blur(8px)', opacity: 0 } 
+          phase === 'transition'
+            ? { scale: 1.15, filter: 'blur(8px)', opacity: 0 }
             : { scale: [1, 1.015, 1], filter: 'blur(0px)', opacity: 1 }
         }
         transition={
@@ -547,11 +547,11 @@ function CircularFrame({ brideName, groomName, phase }) {
               <motion.div
                 key={`dust-${i}`}
                 className="absolute top-1/2 left-1/2 rounded-full"
-                style={{ 
-                  width: size, height: size, 
+                style={{
+                  width: size, height: size,
                   background: colors[i % colors.length],
                   boxShadow: `0 0 4px ${colors[i % colors.length]}88`,
-                  x: '-50%', y: '-50%' 
+                  x: '-50%', y: '-50%'
                 }}
                 animate={{
                   x: `calc(-50% + ${tx}px)`,
@@ -583,13 +583,13 @@ function CircularFrame({ brideName, groomName, phase }) {
           }}
           initial={{ opacity: 0, y: 10, scale: 1, filter: 'blur(0px)' }}
           animate={
-            phase === 'transition' 
-              ? { scale: 0, filter: 'blur(12px)', opacity: 0 } 
+            phase === 'transition'
+              ? { scale: 0, filter: 'blur(12px)', opacity: 0 }
               : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }
           }
           transition={
-            phase === 'transition' 
-              ? { duration: 1.4, ease: [0.34, 0.05, 0.36, 1] } 
+            phase === 'transition'
+              ? { duration: 1.4, ease: [0.34, 0.05, 0.36, 1] }
               : { delay: 0.6, duration: 1 }
           }
         >
