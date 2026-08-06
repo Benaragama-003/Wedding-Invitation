@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import NavBar from './components/ui/NavBar';
 import FloatingParticles from './components/animations/FloatingParticles';
@@ -27,12 +27,85 @@ import RSVPSection from './sections/RSVPSection';
    6. RSVP
    7. Closing
    ============================================ */
+
+const MUSIC_SRC = '/Memory - Daywind Studio Musicians.mp3';
+const MUSIC_VOLUME = 0.7;
+// How many seconds before the end to start the crossfade restart
+const CROSSFADE_WINDOW = 2;
+
 function App() {
   const [phase, setPhase] = useState('landing'); // 'landing' | 'transition' | 'main'
+  const audioRef = useRef(null);
+  const fadingRef = useRef(false);
+
+  // ── Preload the audio on mount so there's zero delay when we play ──
+  useEffect(() => {
+    const audio = new Audio(MUSIC_SRC);
+    audio.preload = 'auto';
+    audio.loop = false;       // we handle looping manually for gapless playback
+    audio.volume = MUSIC_VOLUME;
+    audioRef.current = audio;
+
+    return () => {
+      // Cleanup on unmount
+      audio.pause();
+      audio.removeAttribute('src');
+      audio.load();
+    };
+  }, []);
+
+  // ── Seamless crossfade loop handler ──
+  const handleTimeUpdate = useCallback(() => {
+    const audio = audioRef.current;
+    if (!audio || fadingRef.current) return;
+
+    const remaining = audio.duration - audio.currentTime;
+    if (remaining <= CROSSFADE_WINDOW && audio.duration > 0) {
+      fadingRef.current = true;
+
+      // Fade out over the remaining time, then restart instantly
+      const fadeSteps = 30;
+      const fadeInterval = (remaining * 1000) / fadeSteps;
+      const volumeStep = audio.volume / fadeSteps;
+      let step = 0;
+
+      const fadeTimer = setInterval(() => {
+        step++;
+        audio.volume = Math.max(0, MUSIC_VOLUME - volumeStep * step);
+
+        if (step >= fadeSteps) {
+          clearInterval(fadeTimer);
+          // Restart from the beginning instantly
+          audio.currentTime = 0;
+          audio.volume = MUSIC_VOLUME;
+          fadingRef.current = false;
+        }
+      }, fadeInterval);
+    }
+  }, []);
 
   // Triggered by the "Open Invitation" button in LoadingScreen
   const handleOpen = () => {
     setPhase('transition');
+
+    // Start background music as soon as the invitation opens
+    const audio = audioRef.current;
+    if (audio) {
+      audio.currentTime = 0;
+      audio.volume = MUSIC_VOLUME;
+      audio.addEventListener('timeupdate', handleTimeUpdate);
+      // Also handle the 'ended' event as a safety net for gapless restart
+      audio.addEventListener('ended', () => {
+        audio.currentTime = 0;
+        audio.volume = MUSIC_VOLUME;
+        fadingRef.current = false;
+        audio.play().catch(() => {});
+      });
+      audio.play().catch(() => {
+        // Browsers may block autoplay; this is triggered by user click so it should work
+      });
+    }
+
     // The transition animation runs inside LoadingScreen.
     // We wait for it to complete before revealing the main app.
     setTimeout(() => {
