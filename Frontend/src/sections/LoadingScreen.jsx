@@ -249,53 +249,15 @@ function CircularFrame({ brideName, groomName, phase }) {
     }
   }, [brideName, groomName, size]);
 
-  // Silver palette
-  const branchColor = '#B8B8B0';      // warm silver for branches
-  const leafLight  = '#C8C8C0';       // light silver leaf
-  const leafMid    = '#A8A8A0';       // mid silver leaf
-  const leafDark   = '#989890';       // darker silver leaf
-  const flowerPetal = '#D0D0C8';      // silver-white petals
-  const flowerCenter = '#C0B8A8';     // warm champagne center
-
-  // Generate leaf along a bezier path
-  // Left branch: starts at bottom-center, curves up-left to top
-  // Right branch: starts at bottom-center, curves up-right to top
-  const leftBranchLeaves = [];
-  const rightBranchLeaves = [];
-
-  for (let i = 0; i < 16; i++) {
-    const t = i / 15;
-    // Left branch path: cubic bezier from (200,375) to (60,50)
-    const lx = (1-t)**3*200 + 3*(1-t)**2*t*100 + 3*(1-t)*t**2*40 + t**3*80;
-    const ly = (1-t)**3*375 + 3*(1-t)**2*t*320 + 3*(1-t)*t**2*180 + t**3*45;
-    // Tangent angle for leaf direction
-    const dlx = -3*(1-t)**2*200 + 3*(3*(1-t)**2 - 6*(1-t)*t)*100/3*3 + 3*(6*(1-t)*t - 3*t**2)*40/3*3 + 3*t**2*80;
-    const dly = -3*(1-t)**2*375 + 3*(1-t)**2*320 + (6*(1-t)*t - 3*t**2)*180*3 + 3*t**2*45;
-    const angle = Math.atan2(dly, dlx) * 180 / Math.PI;
-    const side = i % 2 === 0 ? -1 : 1;
-    const leafScale = 0.6 + (1-t) * 0.5;
-    const colors = [leafLight, leafMid, leafDark];
-
-    leftBranchLeaves.push({
-      x: lx + side * 8, y: ly + side * 4,
-      angle: angle + side * 55,
-      scale: leafScale,
-      color: colors[i % 3],
-    });
-
-    // Right branch (mirrored)
-    const rx = 400 - lx;
-    rightBranchLeaves.push({
-      x: rx - side * 8, y: ly + side * 4,
-      angle: 180 - angle - side * 55,
-      scale: leafScale,
-      color: colors[(i+1) % 3],
-    });
-  }
+  // ── Luxury ornament palette — ultra-refined ivory/champagne ──
+  const ornStroke = '#D4D0C8';        // warm ivory for primary strokes
+  const ornStrokeLight = '#E0DCD4';   // lighter ivory for secondary filigree
+  const ornDot = '#CBC7BF';           // champagne pearl dots
+  const ornDiamond = '#D8D4CC';       // soft diamond accents
 
   return (
     <div style={{ position: 'relative', width: size, height: size, margin: '0 auto' }} ref={svgRef}>
-      {/* Silver SVG Foliage - Dissolves to dust */}
+      {/* Luxury Ornamental Monogram Frame - Dissolves to dust */}
       <motion.svg
         viewBox="0 0 400 400"
         style={{
@@ -315,111 +277,283 @@ function CircularFrame({ brideName, groomName, phase }) {
             : { duration: 8, repeat: Infinity, ease: 'easeInOut' }
         }
       >
-        {/* Main branch stems */}
-        <path
-          d="M 200 375 C 100 320, 40 180, 80 45"
-          fill="none" stroke={branchColor} strokeWidth="1.2" strokeLinecap="round" opacity="0.9"
-        />
-        <path
-          d="M 200 375 C 300 320, 360 180, 320 45"
-          fill="none" stroke={branchColor} strokeWidth="1.2" strokeLinecap="round" opacity="0.9"
+        {/* ═══ Primary elliptical ring — very subtle, barely there ═══ */}
+        <ellipse
+          cx="200" cy="200" rx="165" ry="175"
+          stroke={ornStroke} strokeWidth="0.4" opacity="0.22"
         />
 
-        {/* Secondary thinner branches */}
-        <path
-          d="M 180 370 C 85 310, 30 190, 75 55"
-          fill="none" stroke={branchColor} strokeWidth="0.6" strokeLinecap="round" opacity="0.5"
-        />
-        <path
-          d="M 220 370 C 315 310, 370 190, 325 55"
-          fill="none" stroke={branchColor} strokeWidth="0.6" strokeLinecap="round" opacity="0.5"
+        {/* ═══ Inner guide ring — even more subtle ═══ */}
+        <ellipse
+          cx="200" cy="200" rx="148" ry="158"
+          stroke={ornStrokeLight} strokeWidth="0.3" opacity="0.12"
         />
 
-        {/* Left branch leaves */}
-        {leftBranchLeaves.map((leaf, i) => (
+        {/* ═══════════════════════════════════════════════
+            SCROLLWORK CARTOUCHES — at 2, 4, 8, 10 o'clock
+            Each is a symmetrical ornamental flourish cluster
+            ═══════════════════════════════════════════════ */}
+
+        {/* ── 10 o'clock (upper-left) ── */}
+        <g opacity="0.58">
+          {/* Primary sweeping scroll */}
           <path
-            key={`ll-${i}`}
-            d="M 0 0 C 4 -8, 14 -8, 18 -2 C 14 4, 4 6, 0 0 Z"
-            fill={leaf.color}
-            opacity="0.85"
-            transform={`translate(${leaf.x},${leaf.y}) rotate(${leaf.angle}) scale(${leaf.scale})`}
+            d="M 95 95 C 75 80, 58 88, 55 105 C 52 122, 68 130, 82 118 C 90 112, 85 100, 78 102"
+            stroke={ornStroke} strokeWidth="0.7" strokeLinecap="round"
           />
-        ))}
-
-        {/* Right branch leaves */}
-        {rightBranchLeaves.map((leaf, i) => (
+          {/* Secondary counter-scroll */}
           <path
-            key={`rl-${i}`}
-            d="M 0 0 C 4 -8, 14 -8, 18 -2 C 14 4, 4 6, 0 0 Z"
-            fill={leaf.color}
-            opacity="0.85"
-            transform={`translate(${leaf.x},${leaf.y}) rotate(${leaf.angle}) scale(${leaf.scale})`}
+            d="M 95 95 C 108 78, 100 60, 85 58 C 70 56, 62 68, 72 80 C 78 86, 88 82, 86 76"
+            stroke={ornStroke} strokeWidth="0.7" strokeLinecap="round"
           />
-        ))}
+          {/* Delicate filigree wisps */}
+          <path
+            d="M 55 105 C 48 115, 42 110, 45 100"
+            stroke={ornStrokeLight} strokeWidth="0.45" strokeLinecap="round" opacity="0.7"
+          />
+          <path
+            d="M 85 58 C 88 48, 82 42, 75 46"
+            stroke={ornStrokeLight} strokeWidth="0.45" strokeLinecap="round" opacity="0.7"
+          />
+          {/* Outer graceful arc */}
+          <path
+            d="M 48 118 C 35 135, 38 148, 55 145"
+            stroke={ornStrokeLight} strokeWidth="0.35" strokeLinecap="round" opacity="0.45"
+          />
+          <path
+            d="M 72 48 C 60 35, 48 38, 50 55"
+            stroke={ornStrokeLight} strokeWidth="0.35" strokeLinecap="round" opacity="0.45"
+          />
+          {/* Pearl dots */}
+          <circle cx="45" cy="100" r="1.4" fill={ornDot} opacity="0.55" />
+          <circle cx="75" cy="46" r="1.4" fill={ornDot} opacity="0.55" />
+          <circle cx="78" cy="102" r="1.0" fill={ornDot} opacity="0.4" />
+          <circle cx="86" cy="76" r="1.0" fill={ornDot} opacity="0.4" />
+          {/* Diamond accent at the apex */}
+          <path
+            d="M 95 95 L 97.5 91 L 100 95 L 97.5 99 Z"
+            fill={ornDiamond} opacity="0.45"
+          />
+        </g>
 
-        {/* Small berry/bud accents along left branch */}
-        {[0.15, 0.35, 0.55, 0.75].map((t, i) => {
-          const x = (1-t)**3*200 + 3*(1-t)**2*t*100 + 3*(1-t)*t**2*40 + t**3*80;
-          const y = (1-t)**3*375 + 3*(1-t)**2*t*320 + 3*(1-t)*t**2*180 + t**3*45;
-          const side = i % 2 === 0 ? -1 : 1;
+        {/* ── 2 o'clock (upper-right) — mirrored ── */}
+        <g opacity="0.58" transform="translate(400, 0) scale(-1, 1)">
+          <path
+            d="M 95 95 C 75 80, 58 88, 55 105 C 52 122, 68 130, 82 118 C 90 112, 85 100, 78 102"
+            stroke={ornStroke} strokeWidth="0.7" strokeLinecap="round"
+          />
+          <path
+            d="M 95 95 C 108 78, 100 60, 85 58 C 70 56, 62 68, 72 80 C 78 86, 88 82, 86 76"
+            stroke={ornStroke} strokeWidth="0.7" strokeLinecap="round"
+          />
+          <path
+            d="M 55 105 C 48 115, 42 110, 45 100"
+            stroke={ornStrokeLight} strokeWidth="0.45" strokeLinecap="round" opacity="0.7"
+          />
+          <path
+            d="M 85 58 C 88 48, 82 42, 75 46"
+            stroke={ornStrokeLight} strokeWidth="0.45" strokeLinecap="round" opacity="0.7"
+          />
+          <path
+            d="M 48 118 C 35 135, 38 148, 55 145"
+            stroke={ornStrokeLight} strokeWidth="0.35" strokeLinecap="round" opacity="0.45"
+          />
+          <path
+            d="M 72 48 C 60 35, 48 38, 50 55"
+            stroke={ornStrokeLight} strokeWidth="0.35" strokeLinecap="round" opacity="0.45"
+          />
+          <circle cx="45" cy="100" r="1.4" fill={ornDot} opacity="0.55" />
+          <circle cx="75" cy="46" r="1.4" fill={ornDot} opacity="0.55" />
+          <circle cx="78" cy="102" r="1.0" fill={ornDot} opacity="0.4" />
+          <circle cx="86" cy="76" r="1.0" fill={ornDot} opacity="0.4" />
+          <path
+            d="M 95 95 L 97.5 91 L 100 95 L 97.5 99 Z"
+            fill={ornDiamond} opacity="0.45"
+          />
+        </g>
+
+        {/* ── 8 o'clock (lower-left) ── */}
+        <g opacity="0.58">
+          <path
+            d="M 95 305 C 75 320, 58 312, 55 295 C 52 278, 68 270, 82 282 C 90 288, 85 300, 78 298"
+            stroke={ornStroke} strokeWidth="0.7" strokeLinecap="round"
+          />
+          <path
+            d="M 95 305 C 108 322, 100 340, 85 342 C 70 344, 62 332, 72 320 C 78 314, 88 318, 86 324"
+            stroke={ornStroke} strokeWidth="0.7" strokeLinecap="round"
+          />
+          <path
+            d="M 55 295 C 48 285, 42 290, 45 300"
+            stroke={ornStrokeLight} strokeWidth="0.45" strokeLinecap="round" opacity="0.7"
+          />
+          <path
+            d="M 85 342 C 88 352, 82 358, 75 354"
+            stroke={ornStrokeLight} strokeWidth="0.45" strokeLinecap="round" opacity="0.7"
+          />
+          <path
+            d="M 48 282 C 35 265, 38 252, 55 255"
+            stroke={ornStrokeLight} strokeWidth="0.35" strokeLinecap="round" opacity="0.45"
+          />
+          <path
+            d="M 72 352 C 60 365, 48 362, 50 345"
+            stroke={ornStrokeLight} strokeWidth="0.35" strokeLinecap="round" opacity="0.45"
+          />
+          <circle cx="45" cy="300" r="1.4" fill={ornDot} opacity="0.55" />
+          <circle cx="75" cy="354" r="1.4" fill={ornDot} opacity="0.55" />
+          <circle cx="78" cy="298" r="1.0" fill={ornDot} opacity="0.4" />
+          <circle cx="86" cy="324" r="1.0" fill={ornDot} opacity="0.4" />
+          <path
+            d="M 95 305 L 97.5 301 L 100 305 L 97.5 309 Z"
+            fill={ornDiamond} opacity="0.45"
+          />
+        </g>
+
+        {/* ── 4 o'clock (lower-right) — mirrored ── */}
+        <g opacity="0.58" transform="translate(400, 0) scale(-1, 1)">
+          <path
+            d="M 95 305 C 75 320, 58 312, 55 295 C 52 278, 68 270, 82 282 C 90 288, 85 300, 78 298"
+            stroke={ornStroke} strokeWidth="0.7" strokeLinecap="round"
+          />
+          <path
+            d="M 95 305 C 108 322, 100 340, 85 342 C 70 344, 62 332, 72 320 C 78 314, 88 318, 86 324"
+            stroke={ornStroke} strokeWidth="0.7" strokeLinecap="round"
+          />
+          <path
+            d="M 55 295 C 48 285, 42 290, 45 300"
+            stroke={ornStrokeLight} strokeWidth="0.45" strokeLinecap="round" opacity="0.7"
+          />
+          <path
+            d="M 85 342 C 88 352, 82 358, 75 354"
+            stroke={ornStrokeLight} strokeWidth="0.45" strokeLinecap="round" opacity="0.7"
+          />
+          <path
+            d="M 48 282 C 35 265, 38 252, 55 255"
+            stroke={ornStrokeLight} strokeWidth="0.35" strokeLinecap="round" opacity="0.45"
+          />
+          <path
+            d="M 72 352 C 60 365, 48 362, 50 345"
+            stroke={ornStrokeLight} strokeWidth="0.35" strokeLinecap="round" opacity="0.45"
+          />
+          <circle cx="45" cy="300" r="1.4" fill={ornDot} opacity="0.55" />
+          <circle cx="75" cy="354" r="1.4" fill={ornDot} opacity="0.55" />
+          <circle cx="78" cy="298" r="1.0" fill={ornDot} opacity="0.4" />
+          <circle cx="86" cy="324" r="1.0" fill={ornDot} opacity="0.4" />
+          <path
+            d="M 95 305 L 97.5 301 L 100 305 L 97.5 309 Z"
+            fill={ornDiamond} opacity="0.45"
+          />
+        </g>
+
+        {/* ═══ Connecting arcs — graceful sweeps linking the cartouches ═══ */}
+
+        {/* Top arc (breathing, lighter) */}
+        <path
+          d="M 120 52 C 150 32, 250 32, 280 52"
+          stroke={ornStrokeLight} strokeWidth="0.4" strokeLinecap="round" opacity="0.25"
+        />
+        {/* Top inner arc */}
+        <path
+          d="M 130 62 C 155 46, 245 46, 270 62"
+          stroke={ornStrokeLight} strokeWidth="0.3" strokeLinecap="round" opacity="0.18"
+        />
+
+        {/* Bottom arc (breathing, lighter) */}
+        <path
+          d="M 120 348 C 150 368, 250 368, 280 348"
+          stroke={ornStrokeLight} strokeWidth="0.4" strokeLinecap="round" opacity="0.25"
+        />
+        {/* Bottom inner arc */}
+        <path
+          d="M 130 338 C 155 354, 245 354, 270 338"
+          stroke={ornStrokeLight} strokeWidth="0.3" strokeLinecap="round" opacity="0.18"
+        />
+
+        {/* Left vertical connecting arc */}
+        <path
+          d="M 48 140 C 30 175, 30 225, 48 260"
+          stroke={ornStroke} strokeWidth="0.4" strokeLinecap="round" opacity="0.28"
+        />
+
+        {/* Right vertical connecting arc */}
+        <path
+          d="M 352 140 C 370 175, 370 225, 352 260"
+          stroke={ornStroke} strokeWidth="0.4" strokeLinecap="round" opacity="0.28"
+        />
+
+        {/* ═══ Cardinal point accent marks — delicate ticks ═══ */}
+
+        {/* Top center — tiny ornamental terminal */}
+        <g opacity="0.35">
+          <line x1="200" y1="22" x2="200" y2="32" stroke={ornStroke} strokeWidth="0.4" strokeLinecap="round" />
+          <circle cx="200" cy="20" r="1.2" fill={ornDot} />
+          <circle cx="193" cy="28" r="0.8" fill={ornDot} opacity="0.5" />
+          <circle cx="207" cy="28" r="0.8" fill={ornDot} opacity="0.5" />
+        </g>
+
+        {/* Bottom center — tiny ornamental terminal */}
+        <g opacity="0.35">
+          <line x1="200" y1="368" x2="200" y2="378" stroke={ornStroke} strokeWidth="0.4" strokeLinecap="round" />
+          <circle cx="200" cy="380" r="1.2" fill={ornDot} />
+          <circle cx="193" cy="372" r="0.8" fill={ornDot} opacity="0.5" />
+          <circle cx="207" cy="372" r="0.8" fill={ornDot} opacity="0.5" />
+        </g>
+
+        {/* Left center — miniature diamond */}
+        <g opacity="0.3">
+          <path d="M 28 200 L 31 196.5 L 34 200 L 31 203.5 Z" fill={ornDiamond} />
+          <circle cx="24" cy="200" r="0.8" fill={ornDot} />
+          <circle cx="38" cy="200" r="0.8" fill={ornDot} />
+        </g>
+
+        {/* Right center — miniature diamond */}
+        <g opacity="0.3">
+          <path d="M 366 200 L 369 196.5 L 372 200 L 369 203.5 Z" fill={ornDiamond} />
+          <circle cx="362" cy="200" r="0.8" fill={ornDot} />
+          <circle cx="376" cy="200" r="0.8" fill={ornDot} />
+        </g>
+
+        {/* ═══ Subtle pearl dot stations along the ellipse ═══ */}
+        {/* These are placed at 15° intervals to give a fine letterpress dotted feeling */}
+        {[30, 60, 120, 150, 210, 240, 300, 330].map((deg) => {
+          const rad = (deg * Math.PI) / 180;
+          const cx = 200 + Math.cos(rad) * 157;
+          const cy = 200 + Math.sin(rad) * 167;
           return (
-            <g key={`lb-${i}`}>
-              <line x1={x} y1={y} x2={x + side*14} y2={y - 10} stroke={branchColor} strokeWidth="0.5" opacity="0.6" />
-              <circle cx={x + side*14} cy={y - 10} r="2" fill={leafMid} opacity="0.7" />
-              <line x1={x} y1={y} x2={x + side*10} y2={y - 16} stroke={branchColor} strokeWidth="0.5" opacity="0.6" />
-              <circle cx={x + side*10} cy={y - 16} r="1.5" fill={leafLight} opacity="0.6" />
-            </g>
+            <circle
+              key={`pearl-${deg}`}
+              cx={cx} cy={cy} r="0.9"
+              fill={ornDot} opacity="0.28"
+            />
           );
         })}
 
-        {/* Small berry/bud accents along right branch */}
-        {[0.15, 0.35, 0.55, 0.75].map((t, i) => {
-          const x = 400 - ((1-t)**3*200 + 3*(1-t)**2*t*100 + 3*(1-t)*t**2*40 + t**3*80);
-          const y = (1-t)**3*375 + 3*(1-t)**2*t*320 + 3*(1-t)*t**2*180 + t**3*45;
-          const side = i % 2 === 0 ? 1 : -1;
-          return (
-            <g key={`rb-${i}`}>
-              <line x1={x} y1={y} x2={x + side*14} y2={y - 10} stroke={branchColor} strokeWidth="0.5" opacity="0.6" />
-              <circle cx={x + side*14} cy={y - 10} r="2" fill={leafMid} opacity="0.7" />
-              <line x1={x} y1={y} x2={x + side*10} y2={y - 16} stroke={branchColor} strokeWidth="0.5" opacity="0.6" />
-              <circle cx={x + side*10} cy={y - 16} r="1.5" fill={leafLight} opacity="0.6" />
-            </g>
-          );
-        })}
+        {/* ═══ Inner decorative hairline flourishes — left & right ═══ */}
+        {/* These are tiny elegant S-curves near 3 and 9 o'clock, inside the ring */}
 
-        {/* Rosette flowers — left side */}
-        {[0.25, 0.5, 0.72].map((t, i) => {
-          const x = (1-t)**3*200 + 3*(1-t)**2*t*100 + 3*(1-t)*t**2*40 + t**3*80;
-          const y = (1-t)**3*375 + 3*(1-t)**2*t*320 + 3*(1-t)*t**2*180 + t**3*45;
-          const side = i % 2 === 0 ? -1 : 1;
-          const fx = x + side * 18;
-          const fy = y - 4;
-          return (
-            <g key={`fl-${i}`} transform={`translate(${fx},${fy}) scale(${0.8 + i*0.15})`}>
-              {[0, 60, 120, 180, 240, 300].map((a) => (
-                <ellipse key={a} cx={Math.cos(a*Math.PI/180)*5} cy={Math.sin(a*Math.PI/180)*5} rx="4" ry="3" fill={flowerPetal} opacity="0.75" transform={`rotate(${a})`} />
-              ))}
-              <circle cx="0" cy="0" r="2.5" fill={flowerCenter} />
-            </g>
-          );
-        })}
+        {/* Left inner flourish */}
+        <g opacity="0.3">
+          <path
+            d="M 62 185 C 56 190, 56 210, 62 215"
+            stroke={ornStrokeLight} strokeWidth="0.35" strokeLinecap="round"
+          />
+          <path
+            d="M 58 190 C 52 195, 52 205, 58 210"
+            stroke={ornStrokeLight} strokeWidth="0.25" strokeLinecap="round"
+          />
+        </g>
 
-        {/* Rosette flowers — right side */}
-        {[0.25, 0.5, 0.72].map((t, i) => {
-          const x = 400 - ((1-t)**3*200 + 3*(1-t)**2*t*100 + 3*(1-t)*t**2*40 + t**3*80);
-          const y = (1-t)**3*375 + 3*(1-t)**2*t*320 + 3*(1-t)*t**2*180 + t**3*45;
-          const side = i % 2 === 0 ? 1 : -1;
-          const fx = x + side * 18;
-          const fy = y - 4;
-          return (
-            <g key={`fr-${i}`} transform={`translate(${fx},${fy}) scale(${0.8 + i*0.15})`}>
-              {[0, 60, 120, 180, 240, 300].map((a) => (
-                <ellipse key={a} cx={Math.cos(a*Math.PI/180)*5} cy={Math.sin(a*Math.PI/180)*5} rx="4" ry="3" fill={flowerPetal} opacity="0.75" transform={`rotate(${a})`} />
-              ))}
-              <circle cx="0" cy="0" r="2.5" fill={flowerCenter} />
-            </g>
-          );
-        })}
+        {/* Right inner flourish */}
+        <g opacity="0.3">
+          <path
+            d="M 338 185 C 344 190, 344 210, 338 215"
+            stroke={ornStrokeLight} strokeWidth="0.35" strokeLinecap="round"
+          />
+          <path
+            d="M 342 190 C 348 195, 348 205, 342 210"
+            stroke={ornStrokeLight} strokeWidth="0.25" strokeLinecap="round"
+          />
+        </g>
+
       </motion.svg>
 
       {/* Bursting Dust Particles (Triggers during transition) */}
