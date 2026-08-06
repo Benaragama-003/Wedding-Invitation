@@ -224,30 +224,7 @@ function CircularFrame({ brideName, groomName, phase }) {
   const size = 'clamp(300px, 80vw, 450px)';
   const svgRef = React.useRef(null);
   const textRef = React.useRef(null);
-  const [opticalOffset, setOpticalOffset] = React.useState(0);
-
-  React.useEffect(() => {
-    // Measure actual rendered bounding boxes to root-cause and fix alignment
-    if (svgRef.current && textRef.current) {
-      const svgRect = svgRef.current.getBoundingClientRect();
-      const textRect = textRef.current.getBoundingClientRect();
-      
-      // Calculate true centers in viewport coordinates
-      const svgCenter = svgRect.left + (svgRect.width / 2);
-      const textCenter = textRect.left + (textRect.width / 2);
-      
-      // If the flex layout forced an offset due to max-content or constraints,
-      // this difference will exactly correct the text back to the SVG's true center.
-      const diff = svgCenter - textCenter;
-      
-      // Only apply if there's a meaningful sub-pixel/pixel difference on mobile widths
-      if (window.innerWidth <= 430 && Math.abs(diff) > 0.5) {
-        setOpticalOffset(diff);
-      } else {
-        setOpticalOffset(0);
-      }
-    }
-  }, [brideName, groomName, size]);
+  // Removed opticalOffset hack — names are now centered via width:100% + text-align:center
 
   // ── Luxury ornament palette — ultra-refined ivory/champagne ──
   const ornStroke = '#D4D0C8';        // warm ivory for primary strokes
@@ -601,9 +578,8 @@ function CircularFrame({ brideName, groomName, phase }) {
             color: '#FFFFFF',
             lineHeight: 1.1,
             textShadow: '0 4px 16px rgba(0,0,0,0.6)',
-            width: 'max-content',
-            maxWidth: '100vw',
-            transform: `translateX(${opticalOffset}px)`,
+            width: '100%',
+            maxWidth: '100%',
           }}
           initial={{ opacity: 0, y: 10, scale: 1, filter: 'blur(0px)' }}
           animate={
